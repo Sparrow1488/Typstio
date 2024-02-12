@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Typstio.Core", "Typstio.Core\Typstio.Core.csproj", "{55D819FE-BBE0-4250-8508-ED8BA9744CBC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{1D94F1E7-158A-457B-9C75-2C063D8208DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Typstio.App.Console", "App\Typstio.App.Console\Typstio.App.Console.csproj", "{C095E007-ED22-4EB3-85D4-FE775B69D300}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{55D819FE-BBE0-4250-8508-ED8BA9744CBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55D819FE-BBE0-4250-8508-ED8BA9744CBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55D819FE-BBE0-4250-8508-ED8BA9744CBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55D819FE-BBE0-4250-8508-ED8BA9744CBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C095E007-ED22-4EB3-85D4-FE775B69D300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C095E007-ED22-4EB3-85D4-FE775B69D300}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C095E007-ED22-4EB3-85D4-FE775B69D300}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C095E007-ED22-4EB3-85D4-FE775B69D300}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C095E007-ED22-4EB3-85D4-FE775B69D300} = {1D94F1E7-158A-457B-9C75-2C063D8208DC}
+	EndGlobalSection
+EndGlobal
