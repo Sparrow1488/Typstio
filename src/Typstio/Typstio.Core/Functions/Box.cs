@@ -3,13 +3,13 @@ using Typstio.Core.Writers;
 
 namespace Typstio.Core.Functions;
 
-public class Box : ElementFunction
+public class Box : Function
 {
-    public Box(Action<ContentWriter> content, string? width = null, string? height = null) : base("box")
+    public Box(Action<ContentWriter> content, Rgb color, string? width = null, string? height = null) : base("box")
     {
         Argument("width", width);
         Argument("height", height);
-        // Argument("stroke", color); // TODO https://typst.app/docs/reference/visualize/color/
+        ArgumentFunc("stroke", color);
         Content(content);
     }
 }

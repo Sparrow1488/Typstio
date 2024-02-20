@@ -1,4 +1,5 @@
 using System.Text;
+using Typstio.Core.Context;
 using Typstio.Core.Scripting;
 using static Typstio.Core.Defaults.Tokens;
 
@@ -25,11 +26,14 @@ public class ContentWriter
         return this;
     }
 
-    public ContentWriter WriteFunction(FunctionBuilder function)
+    public ContentWriter WriteFunction(object? context, FunctionBuilder function)
     {
-        const string prefix = "#";
+        context ??= new ContentContext();
+
+        if (context is ContentContext)
+            _builder.Append(Hash);
         
-        _builder.Append(prefix).Append(function.Name).Append(OpenParen);
+        _builder.Append(function.Name).Append(OpenParen);
 
         var currentIndex = 0;
         var args = function.Args.ToArray();
@@ -41,9 +45,13 @@ public class ContentWriter
             {
                 _builder.Append(namedArg.Name).Append(Colon).Append(Space);
 
-                if (namedArg is NamedContentArg)
+                if (namedArg is ContentNamedArg)
                 {
                     _builder.Append(OpenBracket).Append(namedArg.Value).Append(CloseBracket);
+                }
+                else if (namedArg is FunctionNamedArg funcArg)
+                {
+                    funcArg.Function.WriteToContent(this, new ArgumentContext());
                 }
                 else
                 {

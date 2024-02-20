@@ -24,6 +24,9 @@ document.WriteEmptyBlock();
 CreateUserTable().WriteToContent(document);
 document.WriteEmptyBlock();
 
+new Box(c => c.WriteString("Hello from Box"), new Rgb("#ff4136")).WriteToContent(document);
+document.WriteEmptyBlock();
+
 Console.WriteLine(document);
 
 void WriteTextContent(ContentWriter textContent)

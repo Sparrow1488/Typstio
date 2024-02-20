@@ -1,3 +1,4 @@
+using Typstio.Core.Contracts;
 using Typstio.Core.Writers;
 
 namespace Typstio.Core.Scripting;
@@ -15,5 +16,5 @@ public record NamedArg(string Name, object? Value, bool IsRequired = false) : Fu
 public record PositionalArg(object? Value, bool IsRequired = false) : FuncArg(HasValue: Value != null, IsRequired);
 
 public record ContentArg(ContentWriter Content) : PositionalArg(Content, IsRequired: true);
-
-public record NamedContentArg(string Name, ContentWriter Content, bool IsRequired = false) : NamedArg(Name, Content, IsRequired);
+public record ContentNamedArg(string Name, ContentWriter Content, bool IsRequired = false) : NamedArg(Name, Content, IsRequired);
+public record FunctionNamedArg(string Name, Function Function, bool IsRequired = false) : NamedArg(Name, Function, IsRequired);
