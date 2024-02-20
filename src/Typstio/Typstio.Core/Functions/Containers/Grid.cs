@@ -6,7 +6,7 @@ namespace Typstio.Core.Functions.Containers;
 
 public class Grid : TypstFunction
 {
-    public Grid(IEnumerable<Action<ContentWriter>> contents, IEnumerable<string>? columns = null, IEnumerable<string>? rows = null) : base("grid")
+    public Grid(IEnumerable<Content> contents, IEnumerable<string>? columns = null, IEnumerable<string>? rows = null) : base("grid")
     {
         if (columns is not null)
             Argument("columns", new Arr(columns));

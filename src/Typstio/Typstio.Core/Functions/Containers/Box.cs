@@ -6,7 +6,7 @@ namespace Typstio.Core.Functions.Containers;
 
 public class Box : TypstFunction
 {
-    public Box(Action<ContentWriter> content, ColorFunction? color = null, string? width = null, string? height = null, string? inset = null) : base("box")
+    public Box(Content content, ColorFunction? color = null, string? width = null, string? height = null, string? inset = null) : base("box")
     {
         Argument("width", width);
         Argument("height", height);

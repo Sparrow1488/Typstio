@@ -20,7 +20,7 @@ public class FunctionBuilder
         return this;
     }
     
-    public FunctionBuilder WithContent(Action<ContentWriter> content)
+    public FunctionBuilder WithContent(Content content)
     {
         var writer = new ContentWriter();
         content.Invoke(writer);
@@ -28,7 +28,7 @@ public class FunctionBuilder
         return this;
     }
 
-    public FunctionBuilder WithContents(IEnumerable<Action<ContentWriter>> contents)
+    public FunctionBuilder WithContents(IEnumerable<Content> contents)
     {
         foreach (var content in contents)
             WithContent(content);

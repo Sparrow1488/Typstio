@@ -5,7 +5,7 @@ namespace Typstio.Core.Functions.Containers;
 
 public class Padding : TypstFunction
 {
-    public Padding(Action<ContentWriter> content, string? top = null, string? right = null, string? bottom = null, string? left = null) : base("pad")
+    public Padding(Content content, string? top = null, string? right = null, string? bottom = null, string? left = null) : base("pad")
     {
         Argument("top", top);
         Argument("right", right);

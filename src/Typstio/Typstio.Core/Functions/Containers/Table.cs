@@ -6,7 +6,7 @@ namespace Typstio.Core.Functions.Containers;
 
 public class Table : TypstFunction
 {
-    public Table(IEnumerable<string> columns, IEnumerable<Action<ContentWriter>> contents, string? inset = null, string? align = null) : base("table")
+    public Table(IEnumerable<string> columns, IEnumerable<Content> contents, string? inset = null, string? align = null) : base("table")
     {
         Argument("columns", new Arr(columns));
         Argument("inset", inset);

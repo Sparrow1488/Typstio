@@ -43,9 +43,9 @@ void WriteTextContent(ContentWriter textContent)
     textContent.Write(new Strong(c => c.WriteString("world")));
 }
 
-IEnumerable<Action<ContentWriter>> GetItems()
+IEnumerable<Content> GetItems()
 {
-    return new Action<ContentWriter>[]
+    return new Content[]
     {
         c => c.Write(new Image("profile.jpg", width: "25%")),
         c => c.WriteString("Two"),
@@ -56,7 +56,7 @@ IEnumerable<Action<ContentWriter>> GetItems()
 Table CreateUserTable()
 {
     var columns = new[] {"auto", "1fr", "1fr"};
-    var items = new Action<ContentWriter>[]
+    var items = new Content[]
     {
         _ => { },
         c => c.Write(new Strong(strong => strong.WriteString("Name"))),
@@ -81,7 +81,7 @@ TypstFunction CreateTemplateCard(string name, string birth, string phone, string
         // Body
         new Box(body => body.Write(
             new Padding(pd => pd.Write(
-                new Grid(new Action<ContentWriter>[]
+                new Grid(new Content[]
                 {
                     // Column 1
                     gridCol => gridCol

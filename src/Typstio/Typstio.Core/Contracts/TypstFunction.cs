@@ -30,17 +30,17 @@ public abstract class TypstFunction : IContentWritable
     /// <summary>
     /// Named Content Argument
     /// </summary>
-    protected void Argument(string name, Action<ContentWriter>? value, bool required = false)
+    protected void Argument(string name, Content? value, bool required = false)
     {
         var content = new ContentWriter();
         value?.Invoke(content);
         AddArgumentIfValid(new ContentNamedArg(name, content, required), value, required);
     }
     
-    protected void Content(Action<ContentWriter> content) 
+    protected void Content(Content content) 
         => _builder.WithContent(content);
     
-    protected void Content(IEnumerable<Action<ContentWriter>> contents) 
+    protected void Content(IEnumerable<Content> contents) 
         => _builder.WithContents(contents);
     
     public void WriteToContent(ContentWriter writer, object? context = null)

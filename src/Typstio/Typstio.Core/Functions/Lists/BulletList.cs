@@ -5,7 +5,7 @@ namespace Typstio.Core.Functions.Lists;
 
 public class BulletList : TypstFunction
 {
-    public BulletList(IEnumerable<Action<ContentWriter>> items) : base("list")
+    public BulletList(IEnumerable<Content> items) : base("list")
     {
         Content(items);
     }

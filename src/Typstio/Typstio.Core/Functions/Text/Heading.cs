@@ -5,7 +5,7 @@ namespace Typstio.Core.Functions.Text;
 
 public class Heading : TypstFunction
 {
-    public Heading(int level, Action<ContentWriter> content) : base("heading")
+    public Heading(int level, Content content) : base("heading")
     {
         Argument("level", level);
         Content(content);

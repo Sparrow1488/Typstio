@@ -5,7 +5,7 @@ namespace Typstio.Core.Functions.Containers;
 
 public class Figure : TypstFunction
 {
-    public Figure(Action<ContentWriter> content, Action<ContentWriter> caption) : base("figure")
+    public Figure(Content content, Content caption) : base("figure")
     {
         Argument("caption", caption);
         Content(content);
