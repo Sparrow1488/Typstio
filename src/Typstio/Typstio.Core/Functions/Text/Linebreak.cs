@@ -1,6 +1,6 @@
 using Typstio.Core.Contracts;
 
-namespace Typstio.Core.Functions;
+namespace Typstio.Core.Functions.Text;
 
 public class Linebreak : TypstFunction
 {

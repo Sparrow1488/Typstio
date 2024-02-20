@@ -1,4 +1,5 @@
 using Typstio.Core.Functions;
+using Typstio.Core.Functions.Text;
 using Typstio.Core.Writers;
 
 namespace Typstio.Core.Extensions;

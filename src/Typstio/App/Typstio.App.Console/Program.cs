@@ -1,34 +1,38 @@
 ﻿using Typstio.Core.Contracts;
 using Typstio.Core.Extensions;
 using Typstio.Core.Functions;
+using Typstio.Core.Functions.Colors;
+using Typstio.Core.Functions.Containers;
+using Typstio.Core.Functions.Lists;
+using Typstio.Core.Functions.Text;
 using Typstio.Core.Writers;
 
 var document = new ContentWriter();
 
-// new Heading(1, content => content.WriteString("Introduction")).WriteToContent(document);
-// document.WriteEmptyBlock();
-//
-// new Text(WriteTextContent).WriteToContent(document);
-// document.WriteEmptyBlock();
-//
-// new BulletList(GetItems()).WriteToContent(document);
-// document.WriteEmptyBlock();
-//
-// var image = new Image("profile.jpg", width: "20%");
-//
-// image.WriteToContent(document);
-// document.WriteEmptyBlock();
-//
-// new Figure(c => image.WriteToContent(c), cap => cap.WriteString("About me")).WriteToContent(document);
-// document.WriteEmptyBlock();
-//
-// CreateUserTable().WriteToContent(document);
-// document.WriteEmptyBlock();
-//
-// new Box(c => c.WriteString("Hello from Box"), new Rgb("#ff4136")).WriteToContent(document);
-// document.WriteEmptyBlock();
+document.Write(new Heading(1, content => content.WriteString("Introduction")));
+document.WriteEmptyBlock();
 
-CreateTemplateCard("Валентин Гиперборей", "04.12.1998", "+79531345309", "sparrow@gmail.com").WriteToContent(document);
+document.Write(new Text(WriteTextContent));
+document.WriteEmptyBlock();
+
+document.Write(new BulletList(GetItems()));
+document.WriteEmptyBlock();
+
+var image = new Image("profile.jpg", width: "20%");
+
+document.Write(image);
+document.WriteEmptyBlock();
+
+document.Write(new Figure(c => image.WriteToContent(c), cap => cap.WriteString("About me")));
+document.WriteEmptyBlock();
+
+document.Write(CreateUserTable());
+document.WriteEmptyBlock();
+
+document.Write(new Box(c => c.WriteString("Hello from Box"), new Rgb("#ff4136")));
+document.WriteEmptyBlock();
+
+document.Write(CreateTemplateCard("Валентин Гиперборей", "04.12.1998", "+79531345309", "sparrow@gmail.com"));
 document.WriteEmptyBlock();
 
 Console.WriteLine(document);
@@ -69,13 +73,10 @@ Table CreateUserTable()
 
 TypstFunction CreateTemplateCard(string name, string birth, string phone, string email)
 {
-    var gray = new Rgb("#383838");
-    var red = new Rgb("#fc1717");
-    
     return new Box(main =>
     {
         // Header
-        new Box(h => h.WriteString(name), color: red, width: "100%").WriteToContent(main);
+        new Box(h => h.WriteString(name), color: AllColors.Red, width: "100%").WriteToContent(main);
         
         // Body
         new Box(body => body.Write(
@@ -102,5 +103,5 @@ TypstFunction CreateTemplateCard(string name, string birth, string phone, string
             )
         ).WriteToContent(main);
         
-    }, gray, width: "100%", inset: "0pt");
+    }, AllColors.Gray, width: "100%", inset: "0pt");
 }

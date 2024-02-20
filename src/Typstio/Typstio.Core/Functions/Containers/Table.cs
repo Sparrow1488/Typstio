@@ -1,8 +1,8 @@
 using Typstio.Core.Contracts;
-using Typstio.Core.Types;
+using Typstio.Core.Foundations;
 using Typstio.Core.Writers;
 
-namespace Typstio.Core.Functions;
+namespace Typstio.Core.Functions.Containers;
 
 public class Table : TypstFunction
 {

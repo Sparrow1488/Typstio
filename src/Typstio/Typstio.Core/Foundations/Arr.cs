@@ -1,4 +1,4 @@
-namespace Typstio.Core.Types;
+namespace Typstio.Core.Foundations;
 
 public record struct Arr(IEnumerable<object> Items)
 {

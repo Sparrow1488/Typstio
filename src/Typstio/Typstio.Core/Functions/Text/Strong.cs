@@ -1,7 +1,7 @@
 using Typstio.Core.Contracts;
 using Typstio.Core.Writers;
 
-namespace Typstio.Core.Functions;
+namespace Typstio.Core.Functions.Text;
 
 public class Strong : TypstFunction
 {

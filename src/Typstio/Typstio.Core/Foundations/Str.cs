@@ -1,4 +1,4 @@
-namespace Typstio.Core.Types;
+namespace Typstio.Core.Foundations;
 
 public readonly record struct Str
 {
