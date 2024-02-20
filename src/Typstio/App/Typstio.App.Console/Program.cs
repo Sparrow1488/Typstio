@@ -3,13 +3,17 @@ using Typstio.Core.Writers;
 
 var document = new ContentWriter();
 
-new Heading(1, content => content.WriteString("Introduction")).WriteToDocument(document);
+new Heading(1, content => content.WriteString("Introduction")).WriteToContent(document);
 document.WriteEmptyBlock();
 
-new Text(WriteTextContent).WriteToDocument(document);
+new Text(WriteTextContent).WriteToContent(document);
 document.WriteEmptyBlock();
 
-new BulletList(GetItems()).WriteToDocument(document);
+new BulletList(GetItems()).WriteToContent(document);
+document.WriteEmptyBlock();
+
+new Image("profile.jpg", width: "20%").WriteToContent(document);
+document.WriteEmptyBlock();
 
 Console.WriteLine(document);
 

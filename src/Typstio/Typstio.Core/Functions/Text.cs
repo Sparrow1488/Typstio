@@ -18,7 +18,7 @@ public class Text : ElementFunction, IContentWritable
         _font = font;
     }
     
-    public void WriteToDocument(ContentWriter writer)
+    public void WriteToContent(ContentWriter writer)
     {
         var text = new FunctionBuilder(Name)
             .WithArg(new NamedArg(FontArg, _font))

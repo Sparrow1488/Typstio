@@ -15,7 +15,7 @@ public class BulletList : ElementFunction, IContentWritable
         _items = items;
     }
     
-    public void WriteToDocument(ContentWriter writer)
+    public void WriteToContent(ContentWriter writer)
     {
         writer.WriteFunction(
             new FunctionBuilder(Name)

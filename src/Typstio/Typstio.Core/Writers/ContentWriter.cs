@@ -21,7 +21,7 @@ public class ContentWriter
 
     public ContentWriter Write(IContentWritable writable)
     {
-        writable.WriteToDocument(this);
+        writable.WriteToContent(this);
         return this;
     }
 
@@ -31,8 +31,9 @@ public class ContentWriter
         
         _builder.Append(prefix).Append(function.Name).Append(OpenParen);
 
-        var currentArg = 1;
-        foreach (var arg in function.Args.OrderBy(x => x is PositionalArg))
+        var currentIndex = 0;
+        var args = function.Args.ToArray();
+        foreach (var arg in args)
         {
             var skip = false;
 
@@ -40,20 +41,25 @@ public class ContentWriter
             {
                 _builder.Append(namedArg.Name).Append(Colon).Append(Space).Append(namedArg.Value);
             }
+            else if (arg is ContentArg contentArg)
+            {
+                _builder.Append(OpenBracket).Append(contentArg.Value).Append(CloseBracket);
+            }
             else if (arg is PositionalArg positionalArg)
             {
-                _builder.Append(OpenBracket).Append(positionalArg.Value).Append(CloseBracket);
+                _builder.Append(positionalArg.Value);
             }
             else
             {
                 skip = true;
             }
 
-            currentArg++;
+            currentIndex++;
+            var hasNext = currentIndex < args.Length;
             
-            if (skip) continue;
+            if (skip || hasNext && !args[currentIndex].HasValue) continue;
             
-            if (currentArg <= function.Args.Count)
+            if (hasNext)
                 _builder.Append(Comma).Append(Space);
         }
         

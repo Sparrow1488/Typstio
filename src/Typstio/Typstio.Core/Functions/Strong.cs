@@ -15,7 +15,7 @@ public class Strong : ElementFunction, IContentWritable
         _content = content;
     }
 
-    public void WriteToDocument(ContentWriter writer)
+    public void WriteToContent(ContentWriter writer)
     {
         writer.WriteFunction(
             new FunctionBuilder(Name)
