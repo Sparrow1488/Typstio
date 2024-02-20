@@ -39,7 +39,16 @@ public class ContentWriter
 
             if (arg is NamedArg {Value: { }} namedArg)
             {
-                _builder.Append(namedArg.Name).Append(Colon).Append(Space).Append(namedArg.Value);
+                _builder.Append(namedArg.Name).Append(Colon).Append(Space);
+
+                if (namedArg is NamedContentArg)
+                {
+                    _builder.Append(OpenBracket).Append(namedArg.Value).Append(CloseBracket);
+                }
+                else
+                {
+                    _builder.Append(namedArg.Value);
+                }
             }
             else if (arg is ContentArg contentArg)
             {
