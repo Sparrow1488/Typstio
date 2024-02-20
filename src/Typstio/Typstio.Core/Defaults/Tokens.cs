@@ -2,6 +2,7 @@ namespace Typstio.Core.Defaults;
 
 public static class Tokens
 {
+    public const string Hash = "#";
     public const string OpenParen = "(";
     public const string CloseParen = ")";
     public const string OpenBracket = "[";

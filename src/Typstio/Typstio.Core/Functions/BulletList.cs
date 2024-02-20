@@ -1,25 +1,12 @@
 using Typstio.Core.Contracts;
-using Typstio.Core.Scripting;
 using Typstio.Core.Writers;
 
 namespace Typstio.Core.Functions;
 
-public class BulletList : ElementFunction, IContentWritable
+public class BulletList : ElementFunction
 {
-    private const string Name = "list";
-    
-    private readonly IEnumerable<Action<ContentWriter>> _items;
-
-    public BulletList(IEnumerable<Action<ContentWriter>> items)
+    public BulletList(IEnumerable<Action<ContentWriter>> items) : base("list")
     {
-        _items = items;
-    }
-    
-    public void WriteToContent(ContentWriter writer)
-    {
-        writer.WriteFunction(
-            new FunctionBuilder(Name)
-                .WithContents(_items)
-        );
+        Content(items);
     }
 }
