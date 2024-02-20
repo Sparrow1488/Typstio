@@ -16,16 +16,16 @@ public abstract class TypstFunction : IContentWritable
     /// Positional Argument
     /// </summary>
     protected void Argument(object? value, bool required = false) 
-        => _builder.WithArg(new PositionalArg(value, IsRequired: required));
+        => AddArgumentIfValid(new PositionalArg(value, IsRequired: required), value, required);
 
     /// <summary>
     /// Named Argument
     /// </summary>
     protected void Argument(string name, object? value, bool required = false) 
-        => _builder.WithArg(new NamedArg(name, value, IsRequired: required));
-    
-    protected void ArgumentFunc(string name, TypstFunction func, bool required = false) 
-        => _builder.WithArg(new FunctionNamedArg(name, func, IsRequired: required));
+        => AddArgumentIfValid(new NamedArg(name, value, IsRequired: required), value, required);
+
+    protected void ArgumentFunc(string name, TypstFunction? func, bool required = false) 
+        => AddArgumentIfValid(new FunctionNamedArg(name, func, IsRequired: required), func, required);
 
     /// <summary>
     /// Named Content Argument
@@ -34,7 +34,7 @@ public abstract class TypstFunction : IContentWritable
     {
         var content = new ContentWriter();
         value?.Invoke(content);
-        _builder.WithArg(new ContentNamedArg(name, content, required));
+        AddArgumentIfValid(new ContentNamedArg(name, content, required), value, required);
     }
     
     protected void Content(Action<ContentWriter> content) 
@@ -46,5 +46,19 @@ public abstract class TypstFunction : IContentWritable
     public void WriteToContent(ContentWriter writer, object? context = null)
     {
         writer.WriteFunction(context, _builder);
+    }
+
+    private void AddArgumentIfValid(FuncArg arg, object? value, bool required)
+    {
+        Require(value, required);
+        
+        if (value is not null)
+            _builder.WithArg(arg);
+    }
+
+    private static void Require(object? value, bool required)
+    {
+        if (required && value is null)
+            throw new ArgumentException("Value should not be null");
     }
 }

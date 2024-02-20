@@ -1,4 +1,6 @@
-namespace Typstio.Core.Writers;
+using Typstio.Core.Writers;
+
+namespace Typstio.Core.Contracts;
 
 public interface IContentWritable
 {

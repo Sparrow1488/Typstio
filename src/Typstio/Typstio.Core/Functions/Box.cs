@@ -5,10 +5,11 @@ namespace Typstio.Core.Functions;
 
 public class Box : TypstFunction
 {
-    public Box(Action<ContentWriter> content, Rgb color, string? width = null, string? height = null) : base("box")
+    public Box(Action<ContentWriter> content, Rgb? color = null, string? width = null, string? height = null, string? inset = null) : base("box")
     {
         Argument("width", width);
         Argument("height", height);
+        Argument("inset", inset);
         ArgumentFunc("stroke", color);
         Content(content);
     }

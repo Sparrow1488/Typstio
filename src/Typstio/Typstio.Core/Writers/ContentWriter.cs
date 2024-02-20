@@ -1,5 +1,6 @@
 using System.Text;
 using Typstio.Core.Context;
+using Typstio.Core.Contracts;
 using Typstio.Core.Scripting;
 using static Typstio.Core.Defaults.Tokens;
 
@@ -39,7 +40,7 @@ public class ContentWriter
         var args = function.Args.ToArray();
         foreach (var arg in args)
         {
-            var skip = false;
+            var unhandledArgument = false;
 
             if (arg is NamedArg {Value: { }} namedArg)
             {
@@ -51,7 +52,7 @@ public class ContentWriter
                 }
                 else if (namedArg is FunctionNamedArg funcArg)
                 {
-                    funcArg.Function.WriteToContent(this, new ArgumentContext());
+                    funcArg.Function?.WriteToContent(this, new ArgumentContext());
                 }
                 else
                 {
@@ -68,15 +69,13 @@ public class ContentWriter
             }
             else
             {
-                skip = true;
+                unhandledArgument = true;
             }
 
             currentIndex++;
             var hasNext = currentIndex < args.Length;
             
-            if (skip || hasNext && !args[currentIndex].HasValue) continue;
-            
-            if (hasNext)
+            if (hasNext && args[currentIndex].HasValue && !unhandledArgument)
                 _builder.Append(Comma).Append(Space);
         }
         
