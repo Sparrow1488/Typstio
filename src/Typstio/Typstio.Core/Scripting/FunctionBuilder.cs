@@ -27,4 +27,12 @@ public class FunctionBuilder
         _args.Add(new ContentArg(writer));
         return this;
     }
+
+    public FunctionBuilder WithContents(IEnumerable<Action<ContentWriter>> contents)
+    {
+        foreach (var content in contents)
+            WithContent(content);
+
+        return this;
+    }
 }
