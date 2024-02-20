@@ -3,11 +3,11 @@ using Typstio.Core.Writers;
 
 namespace Typstio.Core.Contracts;
 
-public abstract class Function : IContentWritable
+public abstract class TypstFunction : IContentWritable
 {
     private readonly FunctionBuilder _builder;
 
-    protected Function(string name)
+    protected TypstFunction(string name)
     {
         _builder = new FunctionBuilder(name);
     }
@@ -24,7 +24,7 @@ public abstract class Function : IContentWritable
     protected void Argument(string name, object? value, bool required = false) 
         => _builder.WithArg(new NamedArg(name, value, IsRequired: required));
     
-    protected void ArgumentFunc(string name, Function func, bool required = false) 
+    protected void ArgumentFunc(string name, TypstFunction func, bool required = false) 
         => _builder.WithArg(new FunctionNamedArg(name, func, IsRequired: required));
 
     /// <summary>

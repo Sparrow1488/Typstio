@@ -3,7 +3,7 @@ using Typstio.Core.Writers;
 
 namespace Typstio.Core.Functions;
 
-public class Strong : Function
+public class Strong : TypstFunction
 {
     public Strong(Action<ContentWriter> content) : base("strong")
     {

@@ -3,7 +3,7 @@ using Typstio.Core.Writers;
 
 namespace Typstio.Core.Functions;
 
-public class Figure : Function
+public class Figure : TypstFunction
 {
     public Figure(Action<ContentWriter> content, Action<ContentWriter> caption) : base("figure")
     {

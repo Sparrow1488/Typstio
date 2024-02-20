@@ -3,7 +3,7 @@ using Typstio.Core.Writers;
 
 namespace Typstio.Core.Functions;
 
-public class Box : Function
+public class Box : TypstFunction
 {
     public Box(Action<ContentWriter> content, Rgb color, string? width = null, string? height = null) : base("box")
     {

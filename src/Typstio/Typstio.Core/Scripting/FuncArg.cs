@@ -17,4 +17,4 @@ public record PositionalArg(object? Value, bool IsRequired = false) : FuncArg(Ha
 
 public record ContentArg(ContentWriter Content) : PositionalArg(Content, IsRequired: true);
 public record ContentNamedArg(string Name, ContentWriter Content, bool IsRequired = false) : NamedArg(Name, Content, IsRequired);
-public record FunctionNamedArg(string Name, Function Function, bool IsRequired = false) : NamedArg(Name, Function, IsRequired);
+public record FunctionNamedArg(string Name, TypstFunction Function, bool IsRequired = false) : NamedArg(Name, Function, IsRequired);

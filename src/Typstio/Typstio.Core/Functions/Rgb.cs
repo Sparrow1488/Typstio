@@ -3,7 +3,7 @@ using Typstio.Core.Types;
 
 namespace Typstio.Core.Functions;
 
-public class Rgb : Function
+public class Rgb : TypstFunction
 {
     public Rgb(string hex) : base("rgb")
     {

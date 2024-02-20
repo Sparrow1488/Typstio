@@ -3,7 +3,7 @@ using Typstio.Core.Writers;
 
 namespace Typstio.Core.Functions;
 
-public class Heading : Function
+public class Heading : TypstFunction
 {
     public Heading(int level, Action<ContentWriter> content) : base("heading")
     {

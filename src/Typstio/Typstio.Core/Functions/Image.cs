@@ -3,7 +3,7 @@ using Typstio.Core.Types;
 
 namespace Typstio.Core.Functions;
 
-public class Image : Function
+public class Image : TypstFunction
 {
     public Image(string str, string? width = null, string? height = null) : base("image")
     {
