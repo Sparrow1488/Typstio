@@ -10,4 +10,9 @@ public class Heading : TypstFunction
         Argument("level", level);
         Content(content);
     }
+
+    public Heading(int level, string text) : this(level, w => w.WriteString(text))
+    {
+        
+    }
 }

@@ -10,4 +10,9 @@ public class Figure : TypstFunction
         Argument("caption", caption);
         Content(content);
     }
+
+    public Figure(TypstFunction function, string text) : this(c => c.Write(function), cap => cap.WriteString(text))
+    {
+        
+    }
 }

@@ -9,4 +9,9 @@ public class Strong : TypstFunction
     {
         Content(content);
     }
+
+    public Strong(string text) : this(w => w.WriteString(text))
+    {
+        
+    }
 }

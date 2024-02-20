@@ -1,6 +1,6 @@
 namespace Typstio.Core.Functions.Colors;
 
-public static class AllColors
+public static class Colors
 {
     public static ColorFunction Black => new Luma(0);
     public static ColorFunction Gray => new Luma(170);

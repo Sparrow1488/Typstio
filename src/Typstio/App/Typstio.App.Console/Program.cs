@@ -9,7 +9,7 @@ using Typstio.Core.Writers;
 
 var document = new ContentWriter();
 
-document.Write(new Heading(1, content => content.WriteString("Introduction")));
+document.Write(new Heading(1, "Introduction"));
 document.WriteEmptyBlock();
 
 document.Write(new Text(WriteTextContent));
@@ -23,7 +23,7 @@ var image = new Image("profile.jpg", width: "20%");
 document.Write(image);
 document.WriteEmptyBlock();
 
-document.Write(new Figure(c => image.WriteToContent(c), cap => cap.WriteString("About me")));
+document.Write(new Figure(image, "About me"));
 document.WriteEmptyBlock();
 
 document.Write(CreateUserTable());
@@ -55,12 +55,11 @@ IEnumerable<Content> GetItems()
 
 Table CreateUserTable()
 {
-    var columns = new[] {"auto", "1fr", "1fr"};
     var items = new Content[]
     {
         _ => { },
-        c => c.Write(new Strong(strong => strong.WriteString("Name"))),
-        c => c.Write(new Strong(strong => strong.WriteString("Phone"))),
+        c => c.Write(new Strong("Name")),
+        c => c.Write(new Strong("Phone")),
         
         c => c.WriteString("1"),
         c => c.WriteString("Sparrow"),
@@ -68,7 +67,7 @@ Table CreateUserTable()
               .WriteString("+89231365311")
     };
     
-    return new Table(columns, items, inset: "10pt", align: "horizon");
+    return new Table(("auto", "1fr", "1fr"), items, inset: "10pt", align: "horizon");
 }
 
 TypstFunction CreateTemplateCard(string name, string birth, string phone, string email)
@@ -76,32 +75,33 @@ TypstFunction CreateTemplateCard(string name, string birth, string phone, string
     return new Box(main =>
     {
         // Header
-        new Box(h => h.WriteString(name), color: AllColors.Red, width: "100%").WriteToContent(main);
+        main.Write(new Box(h => h.WriteString(name), color: Colors.Red, width: "100%"));
         
         // Body
-        new Box(body => body.Write(
-            new Padding(pd => pd.Write(
-                new Grid(new Content[]
-                {
-                    // Column 1
-                    gridCol => gridCol
-                        .WriteString("Birth").Linebreak()
-                        .WriteString("Phone").Linebreak()
-                        .WriteString("Email").Linebreak(),
+        main.Write(
+            new Box(body => body.Write(
+                new Padding(pd => pd.Write(
+                    new Grid(new Content[]
+                    {
+                        // Column 1
+                        gridCol => gridCol
+                            .WriteString("Birth").Linebreak()
+                            .WriteString("Phone").Linebreak()
+                            .Write(new Strong("Email")).Linebreak(),
 
-                    // Column 2
-                    gridCol => gridCol
-                        .WriteString(birth).Linebreak()
-                        .WriteString(phone).Linebreak()
-                        .WriteString(email.Replace("@", "\\@")).Linebreak(),
+                        // Column 2
+                        gridCol => gridCol
+                            .WriteString(birth).Linebreak()
+                            .WriteString(phone).Linebreak()
+                            .Write(new Strong(email.Replace("@", "\\@"))).Linebreak(),
 
-                    // Column 3
-                    gridCol => gridCol
-                        .Write(new Image("profile.jpg", height: "auto"))
+                        // Column 3
+                        gridCol => gridCol
+                            .Write(new Image("profile.jpg", height: "auto"))
 
-                }, columns: new[] {"15%", "50%", "auto"})), top: "-10pt")
+                    }, columns: ("15%", "50%", "auto"))), top: "-10pt")
+                )
             )
-        ).WriteToContent(main);
-        
-    }, AllColors.Gray, width: "100%", inset: "0pt");
+        );
+    }, Colors.Gray, width: "100%", inset: "0pt");
 }

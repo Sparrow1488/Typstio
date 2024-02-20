@@ -10,4 +10,9 @@ public class Text : TypstFunction
         Argument("font", font);
         Content(content);
     }
+
+    public Text(string text, string? font = null) : this(w => w.WriteString(text), font)
+    {
+        
+    }
 }
