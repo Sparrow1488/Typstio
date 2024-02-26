@@ -1,7 +1,5 @@
-using Typstio.Core.Contracts;
 using Typstio.Core.Foundations;
-using Typstio.Core.Helpful;
-using Typstio.Core.Writers;
+using Typstio.Core.Models;
 
 namespace Typstio.Core.Functions.Containers;
 
@@ -17,7 +15,7 @@ public class Grid : TypstFunction
         Content(contents);
     }
 
-    public Grid(IEnumerable<Content> contents, STuple<string>? columns = null, STuple<string>? rows = null) : this(contents, columns?.ToArray<string>(), rows?.ToArray<string>())
+    public Grid(IEnumerable<Content> contents, ArrTuple<string>? columns = null, ArrTuple<string>? rows = null) : this(contents, columns?.ToArray<string>(), rows?.ToArray<string>())
     {
     }
 }

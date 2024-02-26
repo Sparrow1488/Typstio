@@ -1,8 +1,8 @@
-using Typstio.Core.Writers;
+using Typstio.Core.Models;
 
 namespace Typstio.Core.Contracts;
 
 public interface IContentWritable
 {
-    void WriteToContent(ContentWriter writer, object? context = null);
+    void WriteToContent(ContentWriter writer);
 }

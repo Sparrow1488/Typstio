@@ -1,6 +1,6 @@
 namespace Typstio.Core.Foundations;
 
-public record struct Arr(IEnumerable<object> Items)
+public readonly record struct Arr(IEnumerable<object> Items)
 {
     public override string ToString()
     {

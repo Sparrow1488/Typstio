@@ -1,13 +1,23 @@
 using System.Text;
-using Typstio.Core.Context;
 using Typstio.Core.Contracts;
+using Typstio.Core.Defaults;
+using Typstio.Core.Models;
+using Typstio.Core.Services.Strategies;
 using static Typstio.Core.Defaults.Tokens;
 
-namespace Typstio.Core.Writers;
+namespace Typstio.Core;
 
 public class CodeGenerator
 {
     private readonly StringBuilder _builder = new();
+
+    public static string ToCode(ContentWriter document)
+    {
+        var generator = new CodeGenerator();
+        generator.WriteContent(DocumentContext.Value, document);
+        
+        return generator.ToString();
+    }
     
     public void WriteContent(GenContext context, ContentWriter content)
     {
@@ -16,7 +26,7 @@ public class CodeGenerator
 
         if (!contentCanBeSimplified)
         {
-            context = new ContentContext();
+            context = ContentContext.Value;
             _builder.Append(OpenBracket);
         }
         
@@ -46,7 +56,7 @@ public class CodeGenerator
 
     public void WriteFunction(GenContext context, TypstFunction function)
     {
-        IContentGenerateStrategy strategy = new DefaultGenerateStrategy(this);
+        IFunctionGenerateStrategy strategy = new ContentGenerateStrategy(this);
         
         if (context is ArgumentContext)
         {

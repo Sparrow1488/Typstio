@@ -1,6 +1,6 @@
 using Typstio.Core.Contracts;
 using Typstio.Core.Functions.Text;
-using Typstio.Core.Writers;
+using Typstio.Core.Models;
 
 namespace Typstio.Core.Extensions;
 
@@ -11,9 +11,9 @@ public static class ContentWriterExtensions
         return !pretty ? writer.Write(new Linebreak()) : writer.WriteString(" \\ ");
     }
     
-    public static ContentWriter Write(this ContentWriter writer, IContentWritable writable, object? context = null)
+    public static ContentWriter Write(this ContentWriter writer, IContentWritable writable)
     {
-        writable.WriteToContent(writer, context);
+        writable.WriteToContent(writer);
         return writer;
     }
 }

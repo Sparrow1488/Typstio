@@ -1,7 +1,7 @@
+using Typstio.Core.Contracts;
 using Typstio.Core.Scripting;
-using Typstio.Core.Writers;
 
-namespace Typstio.Core.Contracts;
+namespace Typstio.Core.Models;
 
 public abstract class TypstFunction : IContentWritable
 {
@@ -13,22 +13,22 @@ public abstract class TypstFunction : IContentWritable
     }
 
     public string Name => _builder.Name;
-    public IReadOnlyCollection<FuncArg> Args => _builder.Args;
+    public IReadOnlyCollection<FunctionArgument> Args => _builder.Args;
     
     /// <summary>
     /// Positional Argument
     /// </summary>
     protected void Argument(object? value, bool required = false) 
-        => AddArgumentIfValid(new PositionalArg(value, IsRequired: required), value, required);
+        => AddArgumentIfValid(new PositionalArgument(value, IsRequired: required), value, required);
 
     /// <summary>
     /// Named Argument
     /// </summary>
     protected void Argument(string name, object? value, bool required = false) 
-        => AddArgumentIfValid(new NamedArg(name, value, IsRequired: required), value, required);
+        => AddArgumentIfValid(new ArgumentWithName(name, value, IsRequired: required), value, required);
 
     protected void ArgumentFunc(string name, TypstFunction? func, bool required = false) 
-        => AddArgumentIfValid(new FunctionNamedArg(name, func, IsRequired: required), func, required);
+        => AddArgumentIfValid(new FunctionArgumentWithName(name, func, IsRequired: required), func, required);
 
     /// <summary>
     /// Named Content Argument
@@ -37,7 +37,7 @@ public abstract class TypstFunction : IContentWritable
     {
         var content = new ContentWriter();
         value?.Invoke(content);
-        AddArgumentIfValid(new ContentNamedArg(name, content, required), value, required);
+        AddArgumentIfValid(new ContentArgumentWithName(name, content, required), value, required);
     }
     
     protected void Content(Content content) 
@@ -46,13 +46,12 @@ public abstract class TypstFunction : IContentWritable
     protected void Content(IEnumerable<Content> contents) 
         => _builder.WithContents(contents);
     
-    public void WriteToContent(ContentWriter writer, object? context = null)
+    public void WriteToContent(ContentWriter writer)
     {
-        // writer.WriteFunction(context, _builder);
         writer.WriteFunction(this);
     }
 
-    private void AddArgumentIfValid(FuncArg arg, object? value, bool required)
+    private void AddArgumentIfValid(FunctionArgument arg, object? value, bool required)
     {
         Require(value, required);
         
