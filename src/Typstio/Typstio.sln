@@ -6,6 +6,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{1D94F1E7-158
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Typstio.App.Console", "App\Typstio.App.Console\Typstio.App.Console.csproj", "{C095E007-ED22-4EB3-85D4-FE775B69D300}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Typstio.App.Gui", "App\Typstio.App.Gui\Typstio.App.Gui.csproj", "{81733975-6F16-43A1-A89A-E70CA1070460}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +22,13 @@ Global
 		{C095E007-ED22-4EB3-85D4-FE775B69D300}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C095E007-ED22-4EB3-85D4-FE775B69D300}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C095E007-ED22-4EB3-85D4-FE775B69D300}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81733975-6F16-43A1-A89A-E70CA1070460}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81733975-6F16-43A1-A89A-E70CA1070460}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81733975-6F16-43A1-A89A-E70CA1070460}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81733975-6F16-43A1-A89A-E70CA1070460}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C095E007-ED22-4EB3-85D4-FE775B69D300} = {1D94F1E7-158A-457B-9C75-2C063D8208DC}
+		{81733975-6F16-43A1-A89A-E70CA1070460} = {1D94F1E7-158A-457B-9C75-2C063D8208DC}
 	EndGlobalSection
 EndGlobal
