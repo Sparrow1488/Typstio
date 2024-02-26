@@ -1,6 +1,7 @@
 using System.Text;
 using Typstio.Core.Context;
 using Typstio.Core.Contracts;
+using Typstio.Core.Functions.Text;
 using Typstio.Core.Scripting;
 using static Typstio.Core.Defaults.Tokens;
 
@@ -9,26 +10,33 @@ namespace Typstio.Core.Writers;
 public class ContentWriter
 {
     private readonly StringBuilder _builder;
+    private readonly List<object> _elements = new();
 
     public ContentWriter()
     {
         _builder = new StringBuilder();
     }
 
+    public IReadOnlyCollection<object> Elements => _elements;
+
     public ContentWriter WriteString(string str)
     {
+        _elements.Add(str);
+        
         _builder.Append(str);
         return this;
     }
 
-    public ContentWriter Write(IContentWritable writable)
+    public ContentWriter WriteFunction(TypstFunction function)
     {
-        writable.WriteToContent(this);
+        _elements.Add(function);
         return this;
     }
 
     public ContentWriter WriteFunction(object? context, FunctionBuilder function)
     {
+        _elements.Add(function);
+        
         context ??= new ContentContext();
 
         if (context is ContentContext)
@@ -86,6 +94,9 @@ public class ContentWriter
 
     public ContentWriter WriteEmptyBlock()
     {
+        // TODO: think about it
+        _elements.Add("\n\n");
+        
         _builder.AppendLine();
         _builder.AppendLine();
         return this;

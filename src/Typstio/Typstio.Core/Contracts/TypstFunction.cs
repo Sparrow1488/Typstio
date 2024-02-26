@@ -11,6 +11,9 @@ public abstract class TypstFunction : IContentWritable
     {
         _builder = new FunctionBuilder(name);
     }
+
+    public string Name => _builder.Name;
+    public IReadOnlyCollection<FuncArg> Args => _builder.Args;
     
     /// <summary>
     /// Positional Argument
@@ -45,7 +48,8 @@ public abstract class TypstFunction : IContentWritable
     
     public void WriteToContent(ContentWriter writer, object? context = null)
     {
-        writer.WriteFunction(context, _builder);
+        // writer.WriteFunction(context, _builder);
+        writer.WriteFunction(this);
     }
 
     private void AddArgumentIfValid(FuncArg arg, object? value, bool required)

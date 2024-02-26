@@ -1,4 +1,5 @@
-﻿using Typstio.Core.Contracts;
+﻿using Typstio.Core.Context;
+using Typstio.Core.Contracts;
 using Typstio.Core.Extensions;
 using Typstio.Core.Functions;
 using Typstio.Core.Functions.Colors;
@@ -12,10 +13,16 @@ var document = new ContentWriter();
 document.Write(new Heading(1, "Introduction"));
 document.WriteEmptyBlock();
 
+document.Write(new Figure(new Image("profile.jpg", width: "20%"), "About me"));
+document.WriteEmptyBlock();
+
 document.Write(new Text(WriteTextContent));
 document.WriteEmptyBlock();
 
 document.Write(new BulletList(GetItems()));
+document.WriteEmptyBlock();
+
+document.Write(CreateUserTable());
 document.WriteEmptyBlock();
 
 var image = new Image("profile.jpg", width: "20%");
@@ -23,19 +30,12 @@ var image = new Image("profile.jpg", width: "20%");
 document.Write(image);
 document.WriteEmptyBlock();
 
-document.Write(new Figure(image, "About me"));
-document.WriteEmptyBlock();
 
-document.Write(CreateUserTable());
-document.WriteEmptyBlock();
 
-document.Write(new Box(c => c.WriteString("Hello from Box"), new Rgb("#ff4136")));
-document.WriteEmptyBlock();
-
-document.Write(CreateTemplateCard("Валентин Гиперборей", "04.12.1998", "+79531345309", "sparrow@gmail.com"));
-document.WriteEmptyBlock();
-
-Console.WriteLine(document);
+// Console.WriteLine(document);
+var gen = new CodeGenerator();
+gen.WriteContent(new DocumentContext(), document);
+Console.WriteLine(gen);
 
 void WriteTextContent(ContentWriter textContent)
 {

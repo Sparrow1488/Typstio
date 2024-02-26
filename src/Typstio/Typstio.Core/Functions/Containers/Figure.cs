@@ -1,4 +1,5 @@
 using Typstio.Core.Contracts;
+using Typstio.Core.Extensions;
 using Typstio.Core.Writers;
 
 namespace Typstio.Core.Functions.Containers;

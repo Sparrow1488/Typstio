@@ -1,5 +1,7 @@
 namespace Typstio.Core.Context;
 
-public record ArgumentContext;
+public record GenContext;
 
-public record ContentContext;
+public record ArgumentContext : GenContext;
+public record ContentContext : GenContext;
+public record DocumentContext : GenContext;
