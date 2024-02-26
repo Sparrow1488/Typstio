@@ -1,10 +1,10 @@
-using Typstio.Core.Writers;
+using Typstio.Core.Models;
 
 namespace Typstio.Core.Scripting;
 
 public class FunctionBuilder
 {
-    private readonly List<FuncArg> _args = new();
+    private readonly List<FunctionArgument> _args = new();
 
     public FunctionBuilder(string name)
     {
@@ -12,9 +12,9 @@ public class FunctionBuilder
     }
     
     public string Name { get; }
-    public IReadOnlyCollection<FuncArg> Args => _args;
+    public IReadOnlyCollection<FunctionArgument> Args => _args;
 
-    public FunctionBuilder WithArg(FuncArg arg)
+    public FunctionBuilder WithArg(FunctionArgument arg)
     {
         _args.Add(arg);
         return this;
@@ -24,7 +24,7 @@ public class FunctionBuilder
     {
         var writer = new ContentWriter();
         content.Invoke(writer);
-        _args.Add(new ContentArg(writer));
+        _args.Add(new ContentArgument(writer));
         return this;
     }
 

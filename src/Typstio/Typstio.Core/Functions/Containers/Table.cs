@@ -1,7 +1,5 @@
-using Typstio.Core.Contracts;
 using Typstio.Core.Foundations;
-using Typstio.Core.Helpful;
-using Typstio.Core.Writers;
+using Typstio.Core.Models;
 
 namespace Typstio.Core.Functions.Containers;
 
@@ -15,7 +13,7 @@ public class Table : TypstFunction
         Content(contents);
     }
 
-    public Table(STuple<string> columns, IEnumerable<Content> contents, string? inset = null, string? align = null) : this(columns.ToArray(), contents.ToArray(), inset, align)
+    public Table(ArrTuple<string> columns, IEnumerable<Content> contents, string? inset = null, string? align = null) : this(columns.ToArray(), contents.ToArray(), inset, align)
     {
         
     }

@@ -1,5 +1,5 @@
-using Typstio.Core.Contracts;
 using Typstio.Core.Foundations;
+using Typstio.Core.Models;
 
 namespace Typstio.Core.Functions;
 

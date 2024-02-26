@@ -1,3 +1,3 @@
-namespace Typstio.Core.Writers;
+namespace Typstio.Core.Models;
 
 public delegate void Content(ContentWriter content);

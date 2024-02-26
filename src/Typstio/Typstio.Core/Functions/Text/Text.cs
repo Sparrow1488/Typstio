@@ -1,5 +1,4 @@
-using Typstio.Core.Contracts;
-using Typstio.Core.Writers;
+using Typstio.Core.Models;
 
 namespace Typstio.Core.Functions.Text;
 
@@ -9,10 +8,5 @@ public class Text : TypstFunction
     {
         Argument("font", font);
         Content(content);
-    }
-
-    public Text(string text, string? font = null) : this(w => w.WriteString(text), font)
-    {
-        
     }
 }

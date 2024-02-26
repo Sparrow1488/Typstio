@@ -1,15 +1,20 @@
-﻿using Typstio.Core.Contracts;
+﻿using Typstio.Core;
 using Typstio.Core.Extensions;
 using Typstio.Core.Functions;
 using Typstio.Core.Functions.Colors;
 using Typstio.Core.Functions.Containers;
 using Typstio.Core.Functions.Lists;
 using Typstio.Core.Functions.Text;
-using Typstio.Core.Writers;
+using Typstio.Core.Models;
 
 var document = new ContentWriter();
 
 document.Write(new Heading(1, "Introduction"));
+document.WriteEmptyBlock();
+
+document.Write(new Figure(new Image("profile.jpg", width: "20%"), "About me"));
+document.WriteEmptyBlock();
+document.Write(new Figure(c => c.Write(new Image("profile.jpg", width: "20%")), c => c.WriteString("About me")));
 document.WriteEmptyBlock();
 
 document.Write(new Text(WriteTextContent));
@@ -18,24 +23,18 @@ document.WriteEmptyBlock();
 document.Write(new BulletList(GetItems()));
 document.WriteEmptyBlock();
 
+document.Write(CreateUserTable());
+document.WriteEmptyBlock();
+
 var image = new Image("profile.jpg", width: "20%");
 
 document.Write(image);
 document.WriteEmptyBlock();
 
-document.Write(new Figure(image, "About me"));
+document.Write(CreateTemplateCard("Валентин Гиперборей", "04.09.1998", "+79531345309", "sparrow@gmail.com"));
 document.WriteEmptyBlock();
 
-document.Write(CreateUserTable());
-document.WriteEmptyBlock();
-
-document.Write(new Box(c => c.WriteString("Hello from Box"), new Rgb("#ff4136")));
-document.WriteEmptyBlock();
-
-document.Write(CreateTemplateCard("Валентин Гиперборей", "04.12.1998", "+79531345309", "sparrow@gmail.com"));
-document.WriteEmptyBlock();
-
-Console.WriteLine(document);
+Console.WriteLine(CodeGenerator.ToCode(document));
 
 void WriteTextContent(ContentWriter textContent)
 {
@@ -47,7 +46,7 @@ IEnumerable<Content> GetItems()
 {
     return new Content[]
     {
-        c => c.Write(new Image("profile.jpg", width: "25%")),
+        c => c.Write(new Image("profile.jpg", width: "20%")),
         c => c.WriteString("Two"),
         c => c.WriteString("Three")
     };
@@ -87,13 +86,13 @@ TypstFunction CreateTemplateCard(string name, string birth, string phone, string
                         gridCol => gridCol
                             .WriteString("Birth").Linebreak()
                             .WriteString("Phone").Linebreak()
-                            .Write(new Strong("Email")).Linebreak(),
+                            .WriteString("Email").Linebreak(),
 
                         // Column 2
                         gridCol => gridCol
                             .WriteString(birth).Linebreak()
                             .WriteString(phone).Linebreak()
-                            .Write(new Strong(email.Replace("@", "\\@"))).Linebreak(),
+                            .WriteString(email.Replace("@", "\\@")).Linebreak(),
 
                         // Column 3
                         gridCol => gridCol

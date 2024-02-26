@@ -1,5 +1,5 @@
-using Typstio.Core.Contracts;
-using Typstio.Core.Writers;
+using Typstio.Core.Extensions;
+using Typstio.Core.Models;
 
 namespace Typstio.Core.Functions.Containers;
 
