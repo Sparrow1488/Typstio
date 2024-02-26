@@ -16,7 +16,7 @@ public class ScrollDragger : IDisposable
     {
         _scrollViewer = scrollViewer;
         _content = content;
-        content.MouseLeftButtonDown += MouseLeftButtonDown;
+        content.PreviewMouseLeftButtonDown += MouseLeftButtonDown;
         content.PreviewMouseMove += PreviewMouseMove;
         content.PreviewMouseLeftButtonUp += PreviewMouseLeftButtonUp;
     }

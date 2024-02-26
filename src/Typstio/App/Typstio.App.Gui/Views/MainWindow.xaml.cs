@@ -1,47 +1,36 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using Typstio.App.Gui.Services;
+using Typstio.Core;
 
 namespace Typstio.App.Gui.Views;
 
 public partial class MainWindow
 {
     private double _scale = 1.0;
-    private readonly IDisposable _scrollSub;
-    private readonly FontSizeConverter _fontSizeConverter;
 
     public MainWindow()
     {
         InitializeComponent();
-        _scrollSub = ScrollDragger.Subscribe(MainGrid, GridViewer);
-        _fontSizeConverter = new FontSizeConverter();
+        ScrollDragger.Subscribe(MainGrid, GridViewer);
     }
 
     private void MenuItem_OnClick(object sender, RoutedEventArgs e)
     {
+        if (sender is not MenuItem menuItem) throw new Exception();
+
+        var header = (string) menuItem.Header;
         var body = PaperControl.Body;
-        
-        UIElement? element = null;
-        
-        if (sender is MenuItem menuItem && (string) menuItem.Header == "Заголовок")
+
+        UIElement? element = header switch
         {
-            element = new TextBlock(new Run("Заголовок"))
-            {
-                FontWeight = FontWeights.SemiBold,
-                FontSize = (double) _fontSizeConverter.ConvertFrom("26pt")!
-            };
-        }
-        if (sender is MenuItem menuItem2 && (string) menuItem2.Header == "Текст")
-        {
-            element = new TextBlock(new Run("Просто текст"))
-            {
-                FontSize = FontSize = (double) _fontSizeConverter.ConvertFrom("14pt")!
-            };
-        }
-        
+            "Заголовок" => ControlsFactory.Header(1),
+            "Текст" => ControlsFactory.Text(),
+            _ => null
+        };
+
         if (element is not null)
             body.Children.Add(element);
     }
@@ -60,5 +49,11 @@ public partial class MainWindow
         }
 
         e.Handled = true;
+    }
+
+    private void ParseDocument(object sender, RoutedEventArgs e)
+    {
+        var document = DocumentParser.ReadDocument(PaperControl);
+        MessageBox.Show(CodeGenerator.ToCode(document));
     }
 }

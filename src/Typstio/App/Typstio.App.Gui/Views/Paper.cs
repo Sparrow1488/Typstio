@@ -7,7 +7,7 @@ public class Paper : UserControl
 {
     public Paper()
     {
-        Content = Body;
+        Content = new StackPanel();
         Padding = new Thickness(50, 40, 50, 50);
     }
 
