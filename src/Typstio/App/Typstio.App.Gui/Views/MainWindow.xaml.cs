@@ -28,6 +28,7 @@ public partial class MainWindow
         {
             "Заголовок" => ControlsFactory.Header(1),
             "Текст" => ControlsFactory.Text(),
+            "Таблица" => ControlsFactory.Table(),
             _ => null
         };
 

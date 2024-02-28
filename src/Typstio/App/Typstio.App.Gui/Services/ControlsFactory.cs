@@ -1,4 +1,5 @@
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Typstio.App.Gui.Views.Controls;
 using ResourceKey = Typstio.App.Gui.Defaults.ResourceKey;
@@ -28,6 +29,11 @@ public static class ControlsFactory
             Text = "Просто текст",
             FontSize = (double) FontSizeConverter.ConvertFrom(Resources[ResourceKey.Text])!
         });
+    }
+    
+    public static Table Table()
+    {
+        return AttachSubs(new Table());
     }
 
     private static T AttachSubs<T>(T element) where T : FrameworkElement

@@ -25,6 +25,7 @@
                 x:Name="MainGrid"
                 Background="#dedede"
                 MouseWheel="MainGrid_OnMouseWheel">
+
                 <views:Paper
                     x:Name="PaperControl"
                     Width="21cm"
@@ -36,6 +37,7 @@
                         <ContextMenu>
                             <MenuItem Click="MenuItem_OnClick" Header="Заголовок" />
                             <MenuItem Click="MenuItem_OnClick" Header="Текст" />
+                            <MenuItem Click="MenuItem_OnClick" Header="Таблица" />
                         </ContextMenu>
                     </views:Paper.ContextMenu>
 
