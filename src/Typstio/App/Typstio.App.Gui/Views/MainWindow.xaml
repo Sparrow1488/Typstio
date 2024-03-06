@@ -24,7 +24,7 @@
             <Grid
                 x:Name="MainGrid"
                 Background="#dedede"
-                MouseWheel="MainGrid_OnMouseWheel">
+                MouseWheel="OnMainGridMouseWheel">
 
                 <views:Paper
                     x:Name="PaperControl"
@@ -35,9 +35,11 @@
                     FontFamily="Perun">
                     <views:Paper.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Click="MenuItem_OnClick" Header="Заголовок" />
-                            <MenuItem Click="MenuItem_OnClick" Header="Текст" />
-                            <MenuItem Click="MenuItem_OnClick" Header="Таблица" />
+                            <MenuItem Click="ClickMenuItem" Header="Заголовок" />
+                            <MenuItem Click="ClickMenuItem" Header="Текст" />
+                            <MenuItem Header="Содержимое из данных">
+                                <MenuItem Click="ClickMenuItem" Header="Таблица" />
+                            </MenuItem>
                         </ContextMenu>
                     </views:Paper.ContextMenu>
 

@@ -17,26 +17,28 @@ public partial class MainWindow
         ScrollDragger.Subscribe(MainGrid, GridViewer);
     }
 
-    private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+    private void ClickMenuItem(object sender, RoutedEventArgs e)
     {
-        if (sender is not MenuItem menuItem) throw new Exception();
+        PaperControl.Body.Children.Add(
+            CreateElementByName(
+                ((MenuItem)sender).Header.ToString()!
+            )
+        );
+    }
 
-        var header = (string) menuItem.Header;
-        var body = PaperControl.Body;
-
-        UIElement? element = header switch
+    private static UIElement CreateElementByName(string elementName)
+    {
+        UIElement? element = elementName switch
         {
             "Заголовок" => ControlsFactory.Header(1),
             "Текст" => ControlsFactory.Text(),
-            "Таблица" => ControlsFactory.Table(),
             _ => null
         };
 
-        if (element is not null)
-            body.Children.Add(element);
+        return element!;
     }
 
-    private void MainGrid_OnMouseWheel(object sender, MouseWheelEventArgs e)
+    private void OnMainGridMouseWheel(object sender, MouseWheelEventArgs e)
     {
         if (e.Delta < 0)
         {
