@@ -3,35 +3,21 @@ using Typstio.Core.Extensions;
 using Typstio.Core.Functions;
 using Typstio.Core.Functions.Colors;
 using Typstio.Core.Functions.Containers;
-using Typstio.Core.Functions.Lists;
 using Typstio.Core.Functions.Text;
 using Typstio.Core.Models;
 
 var document = new ContentWriter();
 
-document.Write(new Heading(1, "Introduction"));
+document.SetRule(new TextRule(size: "16pt", font: "Atkinson Hyperlegible"));
 document.WriteEmptyBlock();
 
-document.Write(new Figure(new Image("profile.jpg", width: "20%"), "About me"));
-document.WriteEmptyBlock();
-document.Write(new Figure(c => c.Write(new Image("profile.jpg", width: "20%")), c => c.WriteString("About me")));
-document.WriteEmptyBlock();
-
-document.Write(new Text(WriteTextContent));
-document.WriteEmptyBlock();
-
-document.Write(new BulletList(GetItems()));
+document.Write(new Box(c => c.WriteString("Hello, Typst!"), new Luma(50)));
 document.WriteEmptyBlock();
 
 document.Write(CreateUserTable());
 document.WriteEmptyBlock();
 
-var image = new Image("profile.jpg", width: "20%");
-
-document.Write(image);
-document.WriteEmptyBlock();
-
-document.Write(CreateTemplateCard("Валентин Гиперборей", "04.09.1998", "+79531345309", "sparrow@gmail.com"));
+document.Write(CreateTemplateCard("Иван Иванов", "03.12.2003", "89531357830", "ivan@gmail.com"));
 document.WriteEmptyBlock();
 
 Console.WriteLine(CodeGenerator.ToCode(document));

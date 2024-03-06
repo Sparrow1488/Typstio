@@ -10,4 +10,6 @@ public static class Tokens
     public const string Colon = ":";
     public const string Comma = ",";
     public const string Space = " ";
+
+    public const string SetKeyword = "set";
 }

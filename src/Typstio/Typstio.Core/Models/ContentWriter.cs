@@ -17,6 +17,18 @@ public class ContentWriter
         _elements.Add(function);
         return this;
     }
+
+    public ContentWriter WriteFunction(ITypstFunction function)
+    {
+        _elements.Add(function);
+        return this;
+    }
+
+    public ContentWriter SetRule(ISetRule rule)
+    {
+        _elements.Add(rule);
+        return this;
+    }
     
     public ContentWriter WriteEmptyBlock()
     {

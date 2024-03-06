@@ -17,7 +17,7 @@ public readonly record struct Str
         }
     }
 
-    private string? Value { get; }
+    internal string? Value { get; }
     
     public override string ToString()
     {

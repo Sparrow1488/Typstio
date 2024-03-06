@@ -1,3 +1,4 @@
+using Typstio.Core.Extensions;
 using Typstio.Core.Functions.Colors;
 using Typstio.Core.Models;
 
@@ -7,10 +8,10 @@ public class Box : TypstFunction
 {
     public Box(Content content, ColorFunction? color = null, string? width = null, string? height = null, string? inset = null) : base("box")
     {
-        Argument("width", width);
-        Argument("height", height);
-        Argument("inset", inset);
-        ArgumentFunc("stroke", color);
-        Content(content);
+        Builder.Argument("width", width);
+        Builder.Argument("height", height);
+        Builder.Argument("inset", inset);
+        Builder.ArgumentFunc("stroke", color);
+        Builder.Content(content);
     }
 }

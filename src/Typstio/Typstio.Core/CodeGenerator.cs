@@ -2,6 +2,7 @@ using System.Text;
 using Typstio.Core.Contracts;
 using Typstio.Core.Defaults;
 using Typstio.Core.Models;
+using Typstio.Core.Scripting;
 using Typstio.Core.Services.Strategies;
 using static Typstio.Core.Defaults.Tokens;
 
@@ -32,8 +33,10 @@ public class CodeGenerator
         
         foreach (var element in content.Elements)
         {
-            if (element is TypstFunction function)
+            if (element is ITypstFunction function)
                 WriteFunction(context, function);
+            if (element is ISetRule setRule)
+                WriteSetRule(context, setRule);
             if (element is string @string)
                 WriteString(@string, contentWithOneElement);
         }
@@ -54,24 +57,32 @@ public class CodeGenerator
         }
     }
 
-    public void WriteFunction(GenContext context, TypstFunction function)
+    public void WriteFunction(GenContext context, ITypstFunction function)
     {
-        IFunctionGenerateStrategy strategy = new ContentGenerateStrategy(this);
+        WriteSignature(GetGenerateStrategy(context), function);
+    }
+
+    private void WriteSetRule(GenContext context, ISetRule rule)
+    {
+        RequireNoContent(rule);
+
+        var strategy = GetGenerateStrategy(context);
         
-        if (context is ArgumentContext)
-        {
-            strategy = new ArgumentGenerateStrategy(this);
-        }
-        
-        strategy.WriteFuncName(_builder, function);
+        strategy.WriteKeyword(_builder, SetKeyword);
+        WriteSignature(strategy, rule);
+    }
+
+    private void WriteSignature(ISignatureGenerateStrategy strategy, ISignature signature)
+    {
+        strategy.WriteName(_builder, signature);
 
         _builder.Append(OpenParen);
         
-        var args = function.Args.ToList();
+        var args = signature.Arguments.ToList();
 
         foreach (var argument in args)
         {
-            var handled = strategy.WriteFuncArgument(_builder, argument, function);
+            var handled = strategy.WriteArgument(_builder, argument, signature);
             
             var nextArgIndex = args.IndexOf(argument) + 1;
             var hasNext = nextArgIndex < args.Count;
@@ -81,6 +92,29 @@ public class CodeGenerator
         }
         
         _builder.Append(CloseParen);
+    }
+    
+    private ISignatureGenerateStrategy GetGenerateStrategy(GenContext context)
+    {
+        ISignatureGenerateStrategy strategy = new ContentGenerateStrategy(this);
+        
+        if (context is ArgumentContext)
+        {
+            strategy = new ArgumentGenerateStrategy(this);
+        }
+
+        return strategy;
+    }
+
+    private static void RequireNoContent(ISignature signature)
+    {
+        foreach (var argument in signature.Arguments)
+        {
+            if (argument is ContentArgument or ContentArgumentWithName)
+            {
+                throw new InvalidOperationException("This implementation should be without content argument");
+            }
+        }
     }
 
     public override string ToString()
