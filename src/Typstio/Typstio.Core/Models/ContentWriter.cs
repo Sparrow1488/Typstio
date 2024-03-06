@@ -1,3 +1,5 @@
+using Typstio.Core.Contracts;
+
 namespace Typstio.Core.Models;
 
 public class ContentWriter
@@ -12,12 +14,6 @@ public class ContentWriter
         return this;
     }
 
-    public ContentWriter WriteFunction(TypstFunction function)
-    {
-        _elements.Add(function);
-        return this;
-    }
-
     public ContentWriter WriteFunction(ITypstFunction function)
     {
         _elements.Add(function);
@@ -29,8 +25,21 @@ public class ContentWriter
         _elements.Add(rule);
         return this;
     }
+
+    public ContentWriter SetRuleLine(ISetRule rule)
+    {
+        _elements.Add(rule);
+        NextLine();
+        return this;
+    }
+
+    public ContentWriter NextLine()
+    {
+        _elements.Add("\n");
+        return this;
+    }
     
-    public ContentWriter WriteEmptyBlock()
+    public ContentWriter WriteBlock()
     {
         _elements.Add("\n\n");
         return this;

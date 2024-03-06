@@ -1,4 +1,4 @@
-namespace Typstio.Core.Models;
+namespace Typstio.Core.Contracts;
 
 public interface ISetRule : ISignature
 {

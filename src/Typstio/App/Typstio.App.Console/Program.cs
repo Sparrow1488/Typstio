@@ -5,20 +5,23 @@ using Typstio.Core.Functions.Colors;
 using Typstio.Core.Functions.Containers;
 using Typstio.Core.Functions.Text;
 using Typstio.Core.Models;
+using Typstio.Core.Services;
 
 var document = new ContentWriter();
 
-document.SetRule(new TextRule(size: "16pt", font: "Atkinson Hyperlegible"));
-document.WriteEmptyBlock();
+document.SetRuleLine(new TextRule(size: "18pt", font: "Atkinson Hyperlegible"));
+document.SetRuleLine(new BoxRule(inset: "15pt"));
+document.SetRuleLine(SetRule.FromElementFunction(new Table(ArraySegment<string>.Empty, ArraySegment<Content>.Empty, align: "horizon", inset: "10pt")));
+document.NextLine();
 
-document.Write(new Box(c => c.WriteString("Hello, Typst!"), new Luma(50)));
-document.WriteEmptyBlock();
+document.Write(new Box(c => c.WriteString("Hello, Typst!"), new Rgb("#ff4136")));
+document.WriteBlock();
 
 document.Write(CreateUserTable());
-document.WriteEmptyBlock();
+document.WriteBlock();
 
-document.Write(CreateTemplateCard("Иван Иванов", "03.12.2003", "89531357830", "ivan@gmail.com"));
-document.WriteEmptyBlock();
+// document.Write(CreateTemplateCard("Иван Иванов", "03.12.2003", "89531357830", "ivan@gmail.com"));
+// document.WriteBlock();
 
 Console.WriteLine(CodeGenerator.ToCode(document));
 
@@ -38,7 +41,7 @@ IEnumerable<Content> GetItems()
     };
 }
 
-Table CreateUserTable()
+ITypstFunction CreateUserTable()
 {
     var items = new Content[]
     {
@@ -55,7 +58,7 @@ Table CreateUserTable()
     return new Table(("auto", "1fr", "1fr"), items, inset: "10pt", align: "horizon");
 }
 
-TypstFunction CreateTemplateCard(string name, string birth, string phone, string email)
+ITypstFunction CreateTemplateCard(string name, string birth, string phone, string email)
 {
     return new Box(main =>
     {

@@ -1,12 +1,7 @@
+using Typstio.Core.Contracts;
 using Typstio.Core.Scripting;
 
 namespace Typstio.Core.Models;
-
-public interface ISignature
-{
-    string Name { get; }
-    IEnumerable<SignatureArgument> Arguments { get; }
-}
 
 public abstract class SignatureBase : ISignature
 {
