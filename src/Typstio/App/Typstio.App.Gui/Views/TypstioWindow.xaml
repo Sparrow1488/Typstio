@@ -8,7 +8,6 @@
     Title="TypstioWindow"
     Width="800"
     Height="450"
-    FontFamily="Atkinson Hyperlegible"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid>
@@ -35,7 +34,7 @@
                     <MenuItem Header="Из данных" StaysOpenOnClick="True">
                         <MenuItem Header="Таблица" Tag="{x:Static views:ElKeys.Table}" />
                     </MenuItem>
-                    <MenuItem Click="LoadReport" Header="Загрузить" />
+                    <MenuItem Click="CompileReport" Header="Загрузить" />
                 </ContextMenu>
             </StackPanel.ContextMenu>
 

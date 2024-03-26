@@ -4,11 +4,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using Typstio.App.Gui.Data;
 using Typstio.App.Gui.Services;
 using Typstio.App.Gui.Views.Controls;
 using Typstio.Core;
 using Typstio.Core.Functions.Containers;
 using Typstio.Core.Services;
+using DataTemplate = Typstio.App.Gui.Data.DataTemplate;
 
 namespace Typstio.App.Gui.Views;
 
@@ -23,7 +26,10 @@ public partial class TypstioWindow
         _compiler = new TypstCompiler();
     }
 
-    private void OnContextMenuClick(object sender, RoutedEventArgs e)
+    private static int DocFontSize => 14;
+    private static string DocFontFamily => "Atkinson Hyperlegible";
+
+    private async void OnContextMenuClick(object sender, RoutedEventArgs e)
     {
         if (sender is not MenuItem item || string.IsNullOrWhiteSpace(item?.Tag?.ToString())) 
             return;
@@ -38,36 +44,51 @@ public partial class TypstioWindow
         if (element is IDataBindable bindable)
         {
             // Bind data template
-            // Example
-            var sample = GetSampleData();
+            var sample = await GetDataAsync(); // Example
             bindable.Bind(sample.Item1, sample.Item2);
         }
 
-        ReportPanel.Children.Add(element);
+        Dispatcher.Invoke(() =>
+        {
+            ReportPanel.Children.Add(element);
+            UpdateChildren(ReportPanel.Children);
+        });
     }
 
-    private static (DataTemplate, IEnumerable<IData>) GetSampleData()
+    private static void UpdateChildren(UIElementCollection collection)
+    {
+        foreach (UIElement elem in collection)
+        {
+            TextElement.SetFontFamily(elem, new FontFamily(DocFontFamily));
+        }
+    }
+
+    private static async Task<(DataTemplate, IEnumerable<IData>)> GetDataAsync()
     {
         var data = new List<IData>();
 
         for (var i = 0; i < 10; i++)
         {
-            data.Add(new MockData(new Dictionary<string, object>
-            {
-                {"ID", i},
-                {"Name", "Andrey"},
-                {"Phone", "+12345678910"}
-            }));
+            var json = new JsonData("./wwwroot/users.json");
+            await json.LoadAsync(new[] { "Id", "Phones" });
+            data.Add(json);
         }
-        
-        return (new DataTemplate(new[] {"ID", "Name", "Phone"}), data);
+
+        var keys = data.First().Content!.Keys;
+        return (new DataTemplate(keys.ToList()), data);
     }
 
-    private async void LoadReport(object sender, RoutedEventArgs e)
+    private async void CompileReport(object sender, RoutedEventArgs e)
     {
         const string output = "./output.pdf";
+
+        var info = new DocumentInfo
+        {
+            FontFamily = DocFontFamily,
+            FontSize = DocFontSize
+        };
         
-        var document = DocumentParser.ReadDocument(ReportPanel.Children);
+        var document = DocumentParser.ReadDocument(ReportPanel.Children, info);
         await _compiler.PdfAsync(document, "code.txt", output);
 
         // Show result in browser

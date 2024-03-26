@@ -1,9 +1,11 @@
 using System.Windows;
 using System.Windows.Controls;
+using Typstio.App.Gui.Data;
 using Typstio.App.Gui.Services;
 using Typstio.Core.Contracts;
 using Typstio.Core.Extensions;
 using Typstio.Core.Models;
+using DataTemplate = Typstio.App.Gui.Data.DataTemplate;
 
 namespace Typstio.App.Gui.Views.Controls;
 
