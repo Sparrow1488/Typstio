@@ -1,4 +1,5 @@
 using Typstio.Core.Contracts;
+using Typstio.Core.Extensions;
 
 namespace Typstio.Core.Models;
 

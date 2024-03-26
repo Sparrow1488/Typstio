@@ -56,7 +56,7 @@ public partial class MainWindow
 
     private void ParseDocument(object sender, RoutedEventArgs e)
     {
-        var document = DocumentParser.ReadDocument(PaperControl);
+        var document = DocumentParser.ReadDocument(PaperControl.Body.Children);
         MessageBox.Show(CodeGenerator.ToCode(document));
     }
 }

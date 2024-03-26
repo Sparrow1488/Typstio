@@ -5,7 +5,7 @@ using Typstio.Core.Models;
 
 namespace Typstio.App.Gui.Views.Controls;
 
-public class Header : TextBlock, IContentWritable
+public class Header : TextBox, IContentWritable
 {
     public int Level { get; set; }
     
