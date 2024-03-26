@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -7,14 +8,19 @@ using Typstio.App.Gui.Services;
 using Typstio.App.Gui.Views.Controls;
 using Typstio.Core;
 using Typstio.Core.Functions.Containers;
+using Typstio.Core.Services;
 
 namespace Typstio.App.Gui.Views;
 
 public partial class TypstioWindow
 {
+    private readonly TypstCompiler _compiler;
+
     public TypstioWindow()
     {
         InitializeComponent();
+
+        _compiler = new TypstCompiler();
     }
 
     private void OnContextMenuClick(object sender, RoutedEventArgs e)
@@ -57,13 +63,15 @@ public partial class TypstioWindow
         return (new DataTemplate(new[] {"ID", "Name", "Phone"}), data);
     }
 
-    private void LoadReport(object sender, RoutedEventArgs e)
+    private async void LoadReport(object sender, RoutedEventArgs e)
     {
-        var document = DocumentParser.ReadDocument(ReportPanel.Children);
-        var code = CodeGenerator.ToCode(document);
+        const string output = "./output.pdf";
         
-        MessageBox.Show(code);
-        Debug.WriteLine(code);
+        var document = DocumentParser.ReadDocument(ReportPanel.Children);
+        await _compiler.PdfAsync(document, "code.txt", output);
+
+        // Show result in browser
+        Process.Start("explorer", Path.GetFullPath(output));
     }
 }
 
