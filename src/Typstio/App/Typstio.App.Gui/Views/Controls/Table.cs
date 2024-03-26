@@ -46,17 +46,28 @@ public class Table : Grid, IContentWritable, IDataBindable
 
         var contents = new List<Content>();
 
+        // Headers
         foreach (UIElement child in Children)
         {
             if (child is IContentWritable writable)
                 contents.Add(writable.WriteToContent);
         }
 
-        new Core.Functions.Containers.Table(
-            _template.Fields, 
+        // Data
+        foreach (var data in _data)
+        {
+            if (data.Content is null)
+                throw new InvalidOperationException("Data not load");
+            
+            foreach (var field in data.Content)
+                contents.Add(c => c.WriteString(field.Value.ToString()!));
+        }
+
+        writer.Write(new Core.Functions.Containers.Table(
+            _template.Fields.Select(_ => "1fr"), 
             contents, 
             Inset, 
             Align
-        ).WriteToContent(writer);
+        ));
     }
 }

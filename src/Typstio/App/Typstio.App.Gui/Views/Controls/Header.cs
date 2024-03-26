@@ -1,5 +1,6 @@
 using System.Windows.Controls;
 using Typstio.Core.Contracts;
+using Typstio.Core.Extensions;
 using Typstio.Core.Functions.Text;
 using Typstio.Core.Models;
 
@@ -11,6 +12,6 @@ public class Header : TextBox, IContentWritable
     
     public void WriteToContent(ContentWriter writer)
     {
-        new Heading(Level, Text).WriteToContent(writer);
+        writer.Write(new Heading(Level, Text));
     }
 }
