@@ -1,3 +1,4 @@
+using Typstio.Core.Extensions;
 using Typstio.Core.Foundations;
 using Typstio.Core.Models;
 
@@ -7,10 +8,10 @@ public class Table : TypstFunction
 {
     public Table(IEnumerable<string> columns, IEnumerable<Content> contents, string? inset = null, string? align = null) : base("table")
     {
-        Argument("columns", new Arr(columns));
-        Argument("inset", inset);
-        Argument("align", align);
-        Content(contents);
+        Builder.Argument("columns", new Arr(columns));
+        Builder.Argument("inset", inset);
+        Builder.Argument("align", align);
+        Builder.Content(contents);
     }
 
     public Table(ArrTuple<string> columns, IEnumerable<Content> contents, string? inset = null, string? align = null) : this(columns.ToArray(), contents.ToArray(), inset, align)

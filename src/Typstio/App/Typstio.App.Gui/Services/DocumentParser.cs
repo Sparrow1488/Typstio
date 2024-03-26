@@ -15,9 +15,9 @@ public static class DocumentParser
         {
             if (element is IContentWritable writable)
                 writable.WriteToContent(document);
-            else throw new InvalidOperationException();
+            else throw new NotImplementedException();
 
-            document.WriteEmptyBlock();
+            document.WriteBlock();
         }
 
         return document;

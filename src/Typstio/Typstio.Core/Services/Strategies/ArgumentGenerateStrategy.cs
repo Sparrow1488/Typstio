@@ -1,6 +1,3 @@
-using System.Text;
-using Typstio.Core.Models;
-
 namespace Typstio.Core.Services.Strategies;
 
 public class ArgumentGenerateStrategy : ContentGenerateStrategy
@@ -9,8 +6,5 @@ public class ArgumentGenerateStrategy : ContentGenerateStrategy
     {
     }
 
-    public override void WriteFuncName(StringBuilder builder, TypstFunction function)
-    {
-        builder.Append(function.Name);
-    }
+    protected override string KeywordOrNamePrefix => string.Empty;
 }

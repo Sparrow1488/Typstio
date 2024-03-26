@@ -3,31 +3,48 @@ using Typstio.Core.Contracts;
 using Typstio.Core.Defaults;
 using Typstio.Core.Models;
 using Typstio.Core.Scripting;
+using static Typstio.Core.Defaults.Tokens;
 
 namespace Typstio.Core.Services.Strategies;
 
-public class ContentGenerateStrategy : IFunctionGenerateStrategy
+public class ContentGenerateStrategy : ISignatureGenerateStrategy
 {
     private readonly CodeGenerator _generator;
+    private bool _hasKeyword;
 
     public ContentGenerateStrategy(CodeGenerator generator)
     {
         _generator = generator;
     }
-    
-    public virtual void WriteFuncName(StringBuilder builder, TypstFunction function)
+
+    protected virtual string KeywordOrNamePrefix => Hash;
+
+    public void WriteKeyword(StringBuilder builder, string keyboard)
     {
-        builder.Append(Tokens.Hash);
-        builder.Append(function.Name);
+        _hasKeyword = true;
+        
+        builder.Append(KeywordOrNamePrefix);
+        builder.Append(keyboard);
+        builder.Append(Space);
     }
 
-    public bool WriteFuncArgument(StringBuilder builder, FunctionArgument arg, TypstFunction function)
+    public virtual void WriteName(StringBuilder builder, ISignature signature)
+    {
+        if (!_hasKeyword)
+        {
+            builder.Append(KeywordOrNamePrefix);
+        }
+        
+        builder.Append(signature.Name);
+    }
+
+    public bool WriteArgument(StringBuilder builder, SignatureArgument arg, ISignature signature)
     {
         var handled = true;
 
         if (arg is ArgumentWithName {Value: { }} namedArg)
         {
-            builder.Append(namedArg.Name).Append(Tokens.Colon).Append(Tokens.Space);
+            builder.Append(namedArg.Name).Append(Colon).Append(Space);
 
             if (namedArg is ContentArgumentWithName contentNamedArg)
             {

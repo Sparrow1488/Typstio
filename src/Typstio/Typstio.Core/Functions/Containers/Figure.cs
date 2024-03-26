@@ -7,8 +7,8 @@ public class Figure : TypstFunction
 {
     public Figure(Content content, Content caption) : base("figure")
     {
-        Argument("caption", caption);
-        Content(content);
+        Builder.Argument("caption", caption);
+        Builder.Content(content);
     }
 
     public Figure(TypstFunction function, string text) : this(c => c.Write(function), cap => cap.WriteString(text))
