@@ -1,4 +1,5 @@
-﻿using Typstio.Core;
+﻿using System.Diagnostics;
+using Typstio.Core;
 using Typstio.Core.Extensions;
 using Typstio.Core.Functions;
 using Typstio.Core.Functions.Colors;
@@ -24,6 +25,15 @@ document.WriteBlock();
 // document.WriteBlock();
 
 Console.WriteLine(CodeGenerator.ToCode(document));
+
+Console.WriteLine("Saving local");
+
+const string output = "./code.pdf";
+await new TypstCompiler().PdfAsync(document, "./code.txt", output);
+
+Process.Start("explorer", Path.GetFullPath(output));
+
+Console.WriteLine("OK");
 
 void WriteTextContent(ContentWriter textContent)
 {
