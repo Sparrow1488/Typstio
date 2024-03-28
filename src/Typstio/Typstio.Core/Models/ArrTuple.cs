@@ -5,15 +5,15 @@ namespace Typstio.Core.Models;
 
 public readonly struct ArrTuple<T> : IEnumerable<T>
 {
-   private readonly List<T> _items = new();
-   
-   private ArrTuple(ITuple x)
+   readonly List<T> _items = new();
+
+   ArrTuple(ITuple x)
    {
       for (var i = 0; i < x.Length; i++)
          _items.Add((T)x[i]!);
    }
 
-   private ArrTuple(T x)
+   ArrTuple(T x)
    {
       _items.Add(x);
    }

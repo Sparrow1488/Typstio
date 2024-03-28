@@ -6,19 +6,19 @@ namespace Typstio.Core.Services;
 
 public class TypstCompiler
 {
-    private const string Version = "v0.11.0";
-    private const string Name = "typst-x86_64-pc-windows-msvc";
-    private const string DownloadUri = $"/{Version}/{Name}.zip";
-    
-    private string? _typstPath;
+    const string Version = "v0.11.0";
+    const string Name = "typst-x86_64-pc-windows-msvc";
+    const string DownloadUri = $"/{Version}/{Name}.zip";
+
+    string? _typstPath;
 
     public TypstCompiler(string? typstPath = null)
     {
         _typstPath = typstPath;
     }
 
-    private static string LocalTypstPath => ApplicationTypstDir + "/" + Version + "/" + Name + "/typst.exe";
-    private static string ApplicationTypstDir => AppDomain.CurrentDomain.BaseDirectory + "/typst";
+    static string LocalTypstPath => ApplicationTypstDir + "/" + Version + "/" + Name + "/typst.exe";
+    static string ApplicationTypstDir => AppDomain.CurrentDomain.BaseDirectory + "/typst";
     
     public async Task PdfAsync(ContentWriter content, string codePath, string outputPath)
     {
@@ -33,7 +33,7 @@ public class TypstCompiler
         await Process.Start(_typstPath!, $"compile {codePath} {outputPath}").WaitForExitAsync();
     }
 
-    private async Task DownloadTypstAsync()
+    async Task DownloadTypstAsync()
     {
         if (File.Exists(LocalTypstPath))
         {
