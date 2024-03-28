@@ -6,13 +6,13 @@ namespace Typstio.App.Gui.Services;
 
 public class ScrollDragger : IDisposable
 {
-    private readonly ScrollViewer _scrollViewer;
-    private readonly UIElement _content;
-    private Point _scrollMousePoint;
-    private double _verticalOffset;
-    private double _horizontalOffset;
+    readonly ScrollViewer _scrollViewer;
+    readonly UIElement _content;
+    Point _scrollMousePoint;
+    double _verticalOffset;
+    double _horizontalOffset;
 
-    private ScrollDragger(UIElement content, ScrollViewer scrollViewer)
+    ScrollDragger(UIElement content, ScrollViewer scrollViewer)
     {
         _scrollViewer = scrollViewer;
         _content = content;
@@ -25,14 +25,14 @@ public class ScrollDragger : IDisposable
         return new ScrollDragger(content, scrollViewer);
     }
 
-    private void MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    void MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         _scrollMousePoint = e.GetPosition(_scrollViewer);
         _verticalOffset = _scrollViewer.VerticalOffset;
         _horizontalOffset = _scrollViewer.HorizontalOffset;
     }
 
-    private void PreviewMouseMove(object sender, MouseEventArgs e)
+    void PreviewMouseMove(object sender, MouseEventArgs e)
     {
         if (e.LeftButton != MouseButtonState.Pressed) return;
         

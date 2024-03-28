@@ -4,7 +4,7 @@ namespace Typstio.Core.Scripting;
 
 public class SignatureBuilder
 {
-    private readonly List<SignatureArgument> _arguments = new();
+    readonly List<SignatureArgument> _arguments = new();
 
     public SignatureBuilder(string name)
     {

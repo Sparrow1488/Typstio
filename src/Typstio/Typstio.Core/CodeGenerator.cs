@@ -10,7 +10,7 @@ namespace Typstio.Core;
 
 public class CodeGenerator
 {
-    private readonly StringBuilder _builder = new();
+    readonly StringBuilder _builder = new();
 
     public static string ToCode(ContentWriter document)
     {
@@ -45,7 +45,7 @@ public class CodeGenerator
             _builder.Append(CloseBracket);
     }
 
-    private void WriteString(string @string, bool simplifyContentToString)
+    void WriteString(string @string, bool simplifyContentToString)
     {
         if (simplifyContentToString)
         {
@@ -62,7 +62,7 @@ public class CodeGenerator
         WriteSignature(GetGenerateStrategy(context), function);
     }
 
-    private void WriteSetRule(GenContext context, ISetRule rule)
+    void WriteSetRule(GenContext context, ISetRule rule)
     {
         RequireNoContent(rule);
 
@@ -72,7 +72,7 @@ public class CodeGenerator
         WriteSignature(strategy, rule);
     }
 
-    private void WriteSignature(ISignatureGenerateStrategy strategy, ISignature signature)
+    void WriteSignature(ISignatureGenerateStrategy strategy, ISignature signature)
     {
         strategy.WriteName(_builder, signature);
 
@@ -93,8 +93,8 @@ public class CodeGenerator
         
         _builder.Append(CloseParen);
     }
-    
-    private ISignatureGenerateStrategy GetGenerateStrategy(GenContext context)
+
+    ISignatureGenerateStrategy GetGenerateStrategy(GenContext context)
     {
         ISignatureGenerateStrategy strategy = new ContentGenerateStrategy(this);
         
@@ -106,7 +106,7 @@ public class CodeGenerator
         return strategy;
     }
 
-    private static void RequireNoContent(ISignature signature)
+    static void RequireNoContent(ISignature signature)
     {
         foreach (var argument in signature.Arguments)
         {

@@ -6,7 +6,7 @@ namespace Typstio.App.Gui.Data;
 
 public class JsonData : IData
 {
-    private readonly string _jsonPath;
+    readonly string _jsonPath;
 
     public JsonData(string jsonPath)
     {

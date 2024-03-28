@@ -11,8 +11,8 @@ namespace Typstio.App.Gui.Views.Controls;
 
 public class Table : Grid, IContentWritable, IDataBindable
 {
-    private IEnumerable<IData>? _data;
-    private DataTemplate? _template;
+    IEnumerable<IData>? _data;
+    DataTemplate? _template;
     public string? Inset { get; set; }
     public string? Align { get; set; }
 

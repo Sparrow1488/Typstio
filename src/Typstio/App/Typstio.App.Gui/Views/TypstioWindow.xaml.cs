@@ -17,7 +17,7 @@ namespace Typstio.App.Gui.Views;
 
 public partial class TypstioWindow
 {
-    private readonly TypstCompiler _compiler;
+    readonly TypstCompiler _compiler;
 
     public TypstioWindow()
     {
@@ -26,10 +26,10 @@ public partial class TypstioWindow
         _compiler = new TypstCompiler();
     }
 
-    private static int DocFontSize => 14;
-    private static string DocFontFamily => "Atkinson Hyperlegible";
+    static int DocFontSize => 14;
+    static string DocFontFamily => "Atkinson Hyperlegible";
 
-    private async void OnContextMenuClick(object sender, RoutedEventArgs e)
+    async void OnContextMenuClick(object sender, RoutedEventArgs e)
     {
         if (sender is not MenuItem item || string.IsNullOrWhiteSpace(item?.Tag?.ToString())) 
             return;
@@ -55,7 +55,7 @@ public partial class TypstioWindow
         });
     }
 
-    private static void UpdateChildren(UIElementCollection collection)
+    static void UpdateChildren(UIElementCollection collection)
     {
         foreach (UIElement elem in collection)
         {
@@ -63,7 +63,7 @@ public partial class TypstioWindow
         }
     }
 
-    private static async Task<(DataTemplate, IEnumerable<IData>)> GetDataAsync()
+    static async Task<(DataTemplate, IEnumerable<IData>)> GetDataAsync()
     {
         var data = new List<IData>();
 
@@ -78,7 +78,7 @@ public partial class TypstioWindow
         return (new DataTemplate(keys.ToList()), data);
     }
 
-    private async void CompileReport(object sender, RoutedEventArgs e)
+    async void CompileReport(object sender, RoutedEventArgs e)
     {
         const string output = "./output.pdf";
 
