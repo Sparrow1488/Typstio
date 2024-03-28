@@ -9,8 +9,8 @@ namespace Typstio.Core.Services.Strategies;
 
 public class ContentGenerateStrategy : ISignatureGenerateStrategy
 {
-    private readonly CodeGenerator _generator;
-    private bool _hasKeyword;
+    readonly CodeGenerator _generator;
+    bool _hasKeyword;
 
     public ContentGenerateStrategy(CodeGenerator generator)
     {

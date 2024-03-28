@@ -45,8 +45,8 @@ public static class SignatureBuilderExtensions
         value?.Invoke(content);
         builder.AddArgumentIfValid(new ContentArgumentWithName(name, content, required), value, required);
     }
-    
-    private static void AddArgumentIfValid(this SignatureBuilder builder, SignatureArgument arg, object? value, bool required)
+
+    static void AddArgumentIfValid(this SignatureBuilder builder, SignatureArgument arg, object? value, bool required)
     {
         Require(value, required);
 
@@ -54,7 +54,7 @@ public static class SignatureBuilderExtensions
             builder.WithArgument(arg);
     }
 
-    private static void Require(object? value, bool required)
+    static void Require(object? value, bool required)
     {
         if (required && value is null)
             throw new ArgumentException("Value should not be null");

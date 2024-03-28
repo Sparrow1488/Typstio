@@ -4,7 +4,7 @@ namespace Typstio.Core.Models;
 
 public class ContentWriter
 {
-    private readonly List<object> _elements = new();
+    readonly List<object> _elements = new();
 
     public IReadOnlyCollection<object> Elements => _elements;
 

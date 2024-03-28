@@ -12,5 +12,5 @@ public static class SetRule
         return new SetRuleWrapper(function.Name, arguments);
     }
 
-    private record SetRuleWrapper(string Name, IEnumerable<SignatureArgument> Arguments) : ISetRule;
+    record SetRuleWrapper(string Name, IEnumerable<SignatureArgument> Arguments) : ISetRule;
 }
