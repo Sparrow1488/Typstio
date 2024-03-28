@@ -9,7 +9,7 @@ namespace Typstio.App.Gui.Views;
 
 public partial class MainWindow
 {
-    private double _scale = 1.0;
+    double _scale = 1.0;
 
     public MainWindow()
     {
@@ -17,7 +17,7 @@ public partial class MainWindow
         ScrollDragger.Subscribe(MainGrid, GridViewer);
     }
 
-    private void ClickMenuItem(object sender, RoutedEventArgs e)
+    void ClickMenuItem(object sender, RoutedEventArgs e)
     {
         PaperControl.Body.Children.Add(
             CreateElementByName(
@@ -26,7 +26,7 @@ public partial class MainWindow
         );
     }
 
-    private static UIElement CreateElementByName(string elementName)
+    static UIElement CreateElementByName(string elementName)
     {
         UIElement? element = elementName switch
         {
@@ -38,7 +38,7 @@ public partial class MainWindow
         return element!;
     }
 
-    private void OnMainGridMouseWheel(object sender, MouseWheelEventArgs e)
+    void OnMainGridMouseWheel(object sender, MouseWheelEventArgs e)
     {
         if (e.Delta < 0)
         {
@@ -54,7 +54,7 @@ public partial class MainWindow
         e.Handled = true;
     }
 
-    private void ParseDocument(object sender, RoutedEventArgs e)
+    void ParseDocument(object sender, RoutedEventArgs e)
     {
         // var document = DocumentParser.ReadDocument(PaperControl.Body.Children);
         // MessageBox.Show(CodeGenerator.ToCode(document));

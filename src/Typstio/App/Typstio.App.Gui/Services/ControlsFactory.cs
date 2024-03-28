@@ -7,8 +7,8 @@ namespace Typstio.App.Gui.Services;
 
 public static class ControlsFactory
 {
-    private static readonly FontSizeConverter FontSizeConverter = new();
-    private static ResourceDictionary Resources => Application.Current.Resources;
+    static readonly FontSizeConverter FontSizeConverter = new();
+    static ResourceDictionary Resources => Application.Current.Resources;
     
     public static Header Header(int level)
     {
@@ -35,13 +35,13 @@ public static class ControlsFactory
         return AttachSubs(new Table());
     }
 
-    private static T AttachSubs<T>(T element) where T : FrameworkElement
+    static T AttachSubs<T>(T element) where T : FrameworkElement
     {
         element.MouseDown += OnMouseDown;
         return element;
     }
 
-    private static void OnMouseDown(object sender, MouseButtonEventArgs e)
+    static void OnMouseDown(object sender, MouseButtonEventArgs e)
     {
         MessageBox.Show(sender.ToString());
     }

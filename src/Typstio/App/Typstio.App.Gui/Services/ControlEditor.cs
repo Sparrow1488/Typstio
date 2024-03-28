@@ -7,9 +7,9 @@ namespace Typstio.App.Gui.Services;
 public abstract class ControlEditor<TControl> 
     where TControl : UIElement
 {
-    private const double FontSize = 25;
-    
-    private StackPanel? _main;
+    const double FontSize = 25;
+
+    StackPanel? _main;
 
     public void Edit(TControl control)
     {
@@ -44,7 +44,7 @@ public abstract class ControlEditor<TControl>
         _main.Children.Add(row);
     }
 
-    private static FrameworkElement CreateTypeEditor(Type type, object? startValue)
+    static FrameworkElement CreateTypeEditor(Type type, object? startValue)
     {
         if (type == typeof(string))
         {
