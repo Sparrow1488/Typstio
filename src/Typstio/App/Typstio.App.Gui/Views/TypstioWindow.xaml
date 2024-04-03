@@ -11,6 +11,15 @@
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid>
+        <Menu>
+            <MenuItem Header="Подключить" StaysOpenOnClick="True">
+                <MenuItem
+                    Click="OnAttachDataFileClick"
+                    Header="Файл данных"
+                    Tag="{x:Static views:DataProvideTag.JsonFile}" />
+            </MenuItem>
+        </Menu>
+
         <!--  Report panel  -->
         <StackPanel
             x:Name="ReportPanel"
@@ -30,9 +39,9 @@
                         </Style>
                     </ContextMenu.Resources>
 
-                    <MenuItem Header="Заголовок" Tag="{x:Static views:ElKeys.Header}" />
+                    <MenuItem Header="Заголовок" Tag="{x:Static views:ElemTag.Header}" />
                     <MenuItem Header="Из данных" StaysOpenOnClick="True">
-                        <MenuItem Header="Таблица" Tag="{x:Static views:ElKeys.Table}" />
+                        <MenuItem Header="Таблица" Tag="{x:Static views:ElemTag.Table}" />
                     </MenuItem>
                     <MenuItem Click="CompileReport" Header="Загрузить" />
                 </ContextMenu>

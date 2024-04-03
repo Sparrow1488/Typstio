@@ -3,8 +3,8 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
+using Microsoft.Win32;
 using Typstio.App.Gui.Data;
 using Typstio.App.Gui.Services;
 using Typstio.Core.Services;
@@ -13,13 +13,12 @@ namespace Typstio.App.Gui.Views;
 
 public partial class TypstioWindow
 {
-    readonly TypstCompiler _compiler;
+    readonly TypstCompiler _compiler = new();
+    readonly List<IDataSource> _dataSources = new();
 
     public TypstioWindow()
     {
         InitializeComponent();
-
-        _compiler = new TypstCompiler();
     }
 
     static int DocFontSize => 14;
@@ -27,19 +26,25 @@ public partial class TypstioWindow
 
     async void OnContextMenuClick(object sender, RoutedEventArgs e)
     {
-        if (sender is not MenuItem item || string.IsNullOrWhiteSpace(item?.Tag?.ToString())) 
+        if (sender is not MenuItem item || string.IsNullOrWhiteSpace(item.Tag?.ToString())) 
             return;
 
-        FrameworkElement element = item.Tag.ToString() switch
+        FrameworkElement element = item.Tag switch
         {
-            ElKeys.Header => ControlsFactory.Header(1),
-            ElKeys.Table => ControlsFactory.Table(),
+            ElemTag.Header => ControlsFactory.Header(1),
+            ElemTag.Table => ControlsFactory.Table(),
             _ => throw new NotImplementedException()
         };
 
-        if (element is IDataBindable bindable)
+        if (element is IDataBindable bindable && _dataSources.Count != 0)
         {
-            bindable.Bind(await GetDataAsync());
+            // Пока прикрепляю данные таким образом. Потом будет возможность выбора через UI
+            
+            var source = _dataSources.Last();
+            var data = await source.ProvideAsync();
+            
+            await data.LoadAsync();
+            bindable.Bind(data);
         }
 
         Dispatcher.Invoke(() =>
@@ -56,13 +61,25 @@ public partial class TypstioWindow
             TextElement.SetFontFamily(elem, new FontFamily(DocFontFamily));
         }
     }
-
-    static async Task<IData> GetDataAsync()
+    
+    void OnAttachDataFileClick(object sender, RoutedEventArgs e)
     {
-        var json = new JsonData(await File.ReadAllTextAsync("./wwwroot/users.json"));
-        await json.LoadAsync();
+        if (sender is not MenuItem {Tag: DataProvideTag.JsonFile}) return;
 
-        return json;
+        var dialog = new OpenFileDialog
+        {
+            Filter = "Json file |*.json",
+            FilterIndex = 1,
+            Multiselect = false
+        };
+
+        if (dialog.ShowDialog() is not true)
+        {
+            return;
+        }
+        
+        var source = new JsonDataSource(dialog.FileName);
+        _dataSources.Add(source);
     }
 
     async void CompileReport(object sender, RoutedEventArgs e)
@@ -83,8 +100,13 @@ public partial class TypstioWindow
     }
 }
 
-internal static class ElKeys
+internal enum ElemTag
 {
-    public const string Header = "el.header";
-    public const string Table = "el.table";
+    Header,
+    Table
+}
+
+internal enum DataProvideTag
+{
+    JsonFile
 }
