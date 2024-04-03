@@ -1,36 +1,42 @@
-using System.IO;
+using System.Data;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Typstio.App.Gui.Data;
 
 public class JsonData : IData
 {
-    readonly string _jsonPath;
+    readonly string _json;
 
-    public JsonData(string jsonPath)
+    public JsonData(string json)
     {
-        _jsonPath = jsonPath;
+        _json = json;
     }
+
+    public bool IsLoaded => Data is not null;
+    public DataTable? Data { get; private set; }
     
-    public IReadOnlyDictionary<string, object?>? Content { get; private set; }
-    
-    public async Task<LoadResult> LoadAsync(string[] keys)
+    public Task<bool> LoadAsync()
     {
-        var dict = new Dictionary<string, object?>();
+        Data = JsonConvert.DeserializeObject<DataTable>(_json);
+        return Task.FromResult(Data is not null);
+    }
+
+    public IDataRow[] GetRows()
+    {
+        if (!IsLoaded || Data is null) throw new Exception();
         
-        var json = await File.ReadAllTextAsync(_jsonPath);
-        var jArray = new JArray(JsonConvert.DeserializeObject(json)!).ToArray();
+        using var reader = Data.CreateDataReader();
+        var rows = new List<IDataRow>();
 
-        for (var i = 0; i < jArray.Length; i++)
-        {
-            var token = jArray[0][i];
-            var phone = token["Phones"];
-            var a = phone?[0];
-        }
+        if (!reader.HasRows) 
+            return rows.ToArray();
+        
+        while (reader.Read())
+            for (var i = 0; i < reader.FieldCount; i++)
+                rows.Add(new DataRow(reader.GetName(i), reader.GetValue(i)));
 
-        Content = dict;
-
-        return new LoadResult(true, Array.Empty<string>());
+        return rows.ToArray();
     }
 }
+
+public record DataRow(string Name, object? Value) : IDataRow;

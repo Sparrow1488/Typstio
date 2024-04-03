@@ -1,11 +1,16 @@
-namespace Typstio.App.Gui.Data;
+using System.Data;
 
-public record DataTemplate(IReadOnlyList<string> Fields);
+namespace Typstio.App.Gui.Data;
 
 public interface IData
 {
-    IReadOnlyDictionary<string, object?>? Content { get; }
-    Task<LoadResult> LoadAsync(string[] keys);
+    bool IsLoaded { get; }
+    DataTable? Data { get; }
+    Task<bool> LoadAsync();
 }
 
-public record LoadResult(bool Ok, string[] Failures);
+public interface IDataRow
+{
+    public string Name { get; }
+    public object? Value { get; }
+}

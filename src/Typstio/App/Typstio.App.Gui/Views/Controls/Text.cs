@@ -8,6 +8,8 @@ public class Text : TextBlock, IContentWritable
 {
     public void WriteToContent(ContentWriter writer)
     {
-        new Core.Functions.Text.Text(c => c.WriteString(Text)).WriteToContent(writer);
+        new Core.Functions.Text.Text(
+            c => c.WriteString(Text)
+        ).WriteToContent(writer);
     }
 }

@@ -1,4 +1,4 @@
-﻿using Typstio.App.Gui.Defaults;
+﻿using ResourceKey = Typstio.App.Gui.Defaults.ResourceKey;
 
 namespace Typstio.App.Gui;
 

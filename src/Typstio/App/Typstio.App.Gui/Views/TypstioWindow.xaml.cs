@@ -7,11 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Typstio.App.Gui.Data;
 using Typstio.App.Gui.Services;
-using Typstio.App.Gui.Views.Controls;
-using Typstio.Core;
-using Typstio.Core.Functions.Containers;
 using Typstio.Core.Services;
-using DataTemplate = Typstio.App.Gui.Data.DataTemplate;
 
 namespace Typstio.App.Gui.Views;
 
@@ -43,9 +39,7 @@ public partial class TypstioWindow
 
         if (element is IDataBindable bindable)
         {
-            // Bind data template
-            var sample = await GetDataAsync(); // Example
-            bindable.Bind(sample.Item1, sample.Item2);
+            bindable.Bind(await GetDataAsync());
         }
 
         Dispatcher.Invoke(() =>
@@ -63,19 +57,12 @@ public partial class TypstioWindow
         }
     }
 
-    static async Task<(DataTemplate, IEnumerable<IData>)> GetDataAsync()
+    static async Task<IData> GetDataAsync()
     {
-        var data = new List<IData>();
+        var json = new JsonData(await File.ReadAllTextAsync("./wwwroot/users.json"));
+        await json.LoadAsync();
 
-        for (var i = 0; i < 10; i++)
-        {
-            var json = new JsonData("./wwwroot/users.json");
-            await json.LoadAsync(new[] { "Id", "Phones" });
-            data.Add(json);
-        }
-
-        var keys = data.First().Content!.Keys;
-        return (new DataTemplate(keys.ToList()), data);
+        return json;
     }
 
     async void CompileReport(object sender, RoutedEventArgs e)

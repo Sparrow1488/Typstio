@@ -5,35 +5,38 @@ using Typstio.App.Gui.Services;
 using Typstio.Core.Contracts;
 using Typstio.Core.Extensions;
 using Typstio.Core.Models;
-using DataTemplate = Typstio.App.Gui.Data.DataTemplate;
+using DataRow = System.Data.DataRow;
 
 namespace Typstio.App.Gui.Views.Controls;
 
 public class Table : Grid, IContentWritable, IDataBindable
 {
-    IEnumerable<IData>? _data;
-    DataTemplate? _template;
+    IData? _data;
     public string? Inset { get; set; }
     public string? Align { get; set; }
 
-    public void Bind(DataTemplate template, IEnumerable<IData> data)
+    public void Bind(IData data)
     {
         _data = data;
-        _template = template;
+
+        if (!data.IsLoaded || data.Data is null)
+        {
+            throw new Exception();
+        }
         
         RowDefinitions.Clear();
         ColumnDefinitions.Clear();
         
         RowDefinitions.Add(new RowDefinition());
 
-        for (var i = 0; i < template.Fields.Count; i++)
+        for (var i = 0; i < data.Data.Columns.Count; i++)
         {
-            var field = template.Fields[i];
+            var column = data.Data.Columns[i];
             
             ColumnDefinitions.Add(new ColumnDefinition());
-
+        
             var header = ControlsFactory.Text();
-            header.Text = field;
+            header.Text = column.ColumnName;
             
             SetColumn(header, i);
             
@@ -43,7 +46,7 @@ public class Table : Grid, IContentWritable, IDataBindable
     
     public void WriteToContent(ContentWriter writer)
     {
-        if (_template is null || _data is null)
+        if (_data is null)
             throw new InvalidOperationException("Data not bound");
 
         var contents = new List<Content>();
@@ -56,17 +59,22 @@ public class Table : Grid, IContentWritable, IDataBindable
         }
 
         // Data
-        foreach (var data in _data)
+        foreach (var data in _data.Data!.Rows)
         {
-            if (data.Content is null)
-                throw new InvalidOperationException("Data not load");
-            
-            foreach (var field in data.Content)
-                contents.Add(c => c.WriteString(field.Value.ToString()!));
+            if (data is not DataRow row)
+            {
+                continue;
+            }
+
+            for (var i = 0; i < row.ItemArray.Length; i++)
+            {
+                var content = row[i].ToString()!;
+                contents.Add(c => c.WriteString(content));
+            }
         }
 
         writer.Write(new Core.Functions.Containers.Table(
-            _template.Fields.Select(_ => "1fr"), 
+            Enumerable.Range(0, _data.Data.Columns.Count).Select(_ => "1fr"), 
             contents, 
             Inset, 
             Align
