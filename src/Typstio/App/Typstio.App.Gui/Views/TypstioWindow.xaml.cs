@@ -19,6 +19,8 @@ public partial class TypstioWindow
     public TypstioWindow()
     {
         InitializeComponent();
+
+        ControlsFactory.SetHighlightLayer(MainGrid);
     }
 
     static int DocFontSize => 14;
@@ -36,17 +38,22 @@ public partial class TypstioWindow
             _ => throw new NotImplementedException()
         };
 
-        if (element is IDataBindable bindable && _dataSources.Count != 0)
+        if (element is IDataBindable bindable)
         {
-            // Пока прикрепляю данные таким образом. Потом будет возможность выбора через UI
+            if (_dataSources.Count == 0)
+            {
+                MessageBox.Show("Нельзя создать Bindable элемент без источника данных.", "Ошибка");
+                return;
+            }
             
+            // Пока прикрепляю данные таким образом. Потом будет возможность выбора через UI
             var source = _dataSources.Last();
             var data = await source.ProvideAsync();
             
             await data.LoadAsync();
             bindable.Bind(data);
         }
-
+        
         Dispatcher.Invoke(() =>
         {
             ReportPanel.Children.Add(element);
@@ -80,6 +87,8 @@ public partial class TypstioWindow
         
         var source = new JsonDataSource(dialog.FileName);
         _dataSources.Add(source);
+
+        ElemFromData.Visibility = Visibility.Visible;
     }
 
     async void CompileReport(object sender, RoutedEventArgs e)

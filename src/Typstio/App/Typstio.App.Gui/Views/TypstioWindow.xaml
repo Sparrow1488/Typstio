@@ -10,7 +10,7 @@
     Height="450"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid>
+    <Grid x:Name="MainGrid">
         <Menu>
             <MenuItem Header="Подключить" StaysOpenOnClick="True">
                 <MenuItem
@@ -40,7 +40,11 @@
                     </ContextMenu.Resources>
 
                     <MenuItem Header="Заголовок" Tag="{x:Static views:ElemTag.Header}" />
-                    <MenuItem Header="Из данных" StaysOpenOnClick="True">
+                    <MenuItem
+                        x:Name="ElemFromData"
+                        Header="Из данных"
+                        StaysOpenOnClick="True"
+                        Visibility="Collapsed">
                         <MenuItem Header="Таблица" Tag="{x:Static views:ElemTag.Table}" />
                     </MenuItem>
                     <MenuItem Click="CompileReport" Header="Загрузить" />

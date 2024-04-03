@@ -1,14 +1,24 @@
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 using Typstio.App.Gui.Views.Controls;
 using ResourceKey = Typstio.App.Gui.Defaults.ResourceKey;
+using Table = Typstio.App.Gui.Views.Controls.Table;
 
 namespace Typstio.App.Gui.Services;
 
 public static class ControlsFactory
 {
     static readonly FontSizeConverter FontSizeConverter = new();
+    static Visual? _highlightLayer;
+    static Adorner? _adorner;
     static ResourceDictionary Resources => Application.Current.Resources;
+
+    public static void SetHighlightLayer(Visual layer)
+    {
+        _highlightLayer = layer;
+    }
     
     public static Header Header(int level)
     {
@@ -37,12 +47,24 @@ public static class ControlsFactory
 
     static T AttachSubs<T>(T element) where T : FrameworkElement
     {
-        element.MouseDown += OnMouseDown;
+        element.PreviewMouseDown += OnMouseDown;
         return element;
     }
 
     static void OnMouseDown(object sender, MouseButtonEventArgs e)
     {
-        MessageBox.Show(sender.ToString());
+        // MessageBox.Show(sender.ToString());
+        
+        if (_highlightLayer is null) return;
+
+        var layer = AdornerLayer.GetAdornerLayer(_highlightLayer)!;
+
+        if (_adorner is not null)
+        {
+            layer.Remove(_adorner);
+            _adorner = null;
+        }
+        
+        layer.Add(_adorner ??= new Highlight((UIElement)sender));
     }
 }
