@@ -4,19 +4,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Typstio.App.Gui.ViewModels"
     xmlns:views="clr-namespace:Typstio.App.Gui.Views"
-    Title="TypstioWindow"
+    Title="Typstio - Report editor - v0.0.0"
     Width="800"
     Height="450"
+    d:DataContext="{d:DesignInstance viewModels:TypstioWindowViewModel}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid x:Name="MainGrid">
         <Menu>
             <MenuItem Header="Подключить" StaysOpenOnClick="True">
-                <MenuItem
-                    Click="OnAttachDataFileClick"
-                    Header="Файл данных"
-                    Tag="{x:Static views:DataProvideTag.JsonFile}" />
+                <MenuItem Command="{Binding AddDataFileSource}" Header="Файл данных" />
             </MenuItem>
         </Menu>
 
@@ -31,23 +30,18 @@
             Focusable="True">
             <StackPanel.ContextMenu>
                 <ContextMenu>
-                    <ContextMenu.Resources>
-                        <Style TargetType="{x:Type MenuItem}">
-                            <Style.Setters>
-                                <EventSetter Event="Click" Handler="OnContextMenuClick" />
-                            </Style.Setters>
-                        </Style>
-                    </ContextMenu.Resources>
-
-                    <MenuItem Header="Заголовок" Tag="{x:Static views:ElemTag.Header}" />
                     <MenuItem
-                        x:Name="ElemFromData"
-                        Header="Из данных"
-                        StaysOpenOnClick="True"
-                        Visibility="Collapsed">
-                        <MenuItem Header="Таблица" Tag="{x:Static views:ElemTag.Table}" />
-                    </MenuItem>
-                    <MenuItem Click="CompileReport" Header="Загрузить" />
+                        Command="{Binding CreateElement}"
+                        CommandParameter="{x:Static views:ElemTag.Header}"
+                        Header="Заголовок" />
+                    <MenuItem
+                        Command="{Binding CreateElement}"
+                        CommandParameter="{x:Static views:ElemTag.Table}"
+                        Header="Таблица" />
+                    <MenuItem
+                        Command="{Binding CompileReport}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}}"
+                        Header="Загрузить" />
                 </ContextMenu>
             </StackPanel.ContextMenu>
 

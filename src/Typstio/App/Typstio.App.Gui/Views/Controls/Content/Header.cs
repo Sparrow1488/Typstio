@@ -4,7 +4,7 @@ using Typstio.Core.Extensions;
 using Typstio.Core.Functions.Text;
 using Typstio.Core.Models;
 
-namespace Typstio.App.Gui.Views.Controls;
+namespace Typstio.App.Gui.Views.Controls.Content;
 
 public class Header : TextBox, IContentWritable
 {

@@ -1,4 +1,4 @@
-namespace Typstio.App.Gui;
+namespace Typstio.App.Gui.Documents;
 
 public class DocumentInfo
 {

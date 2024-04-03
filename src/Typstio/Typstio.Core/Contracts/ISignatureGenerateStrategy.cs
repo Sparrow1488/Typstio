@@ -1,5 +1,4 @@
 using System.Text;
-using Typstio.Core.Models;
 using Typstio.Core.Scripting;
 
 namespace Typstio.Core.Contracts;

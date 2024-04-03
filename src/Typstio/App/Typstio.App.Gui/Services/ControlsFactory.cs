@@ -3,8 +3,9 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using Typstio.App.Gui.Views.Controls;
-using ResourceKey = Typstio.App.Gui.Defaults.ResourceKey;
-using Table = Typstio.App.Gui.Views.Controls.Table;
+using Typstio.App.Gui.Views.Controls.Content;
+using ResourceKey = Typstio.App.Gui.ResourceKey;
+using Table = Typstio.App.Gui.Views.Controls.Content.Table;
 
 namespace Typstio.App.Gui.Services;
 

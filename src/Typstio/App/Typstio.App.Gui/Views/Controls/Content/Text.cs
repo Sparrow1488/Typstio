@@ -2,7 +2,7 @@ using System.Windows.Controls;
 using Typstio.Core.Contracts;
 using Typstio.Core.Models;
 
-namespace Typstio.App.Gui.Views.Controls;
+namespace Typstio.App.Gui.Views.Controls.Content;
 
 public class Text : TextBlock, IContentWritable
 {

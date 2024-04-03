@@ -7,7 +7,7 @@ using Typstio.Core.Extensions;
 using Typstio.Core.Models;
 using DataRow = System.Data.DataRow;
 
-namespace Typstio.App.Gui.Views.Controls;
+namespace Typstio.App.Gui.Views.Controls.Content;
 
 public class Table : Grid, IContentWritable, IDataBindable
 {
@@ -49,7 +49,7 @@ public class Table : Grid, IContentWritable, IDataBindable
         if (_data is null)
             throw new InvalidOperationException("Data not bound");
 
-        var contents = new List<Content>();
+        var contents = new List<Core.Models.Content>();
 
         // Headers
         foreach (UIElement child in Children)

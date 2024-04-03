@@ -1,11 +1,10 @@
 using System.Windows;
 using System.Windows.Controls;
-using Typstio.App.Gui.Views;
 using Typstio.Core.Contracts;
 using Typstio.Core.Functions.Text;
 using Typstio.Core.Models;
 
-namespace Typstio.App.Gui.Services;
+namespace Typstio.App.Gui.Documents;
 
 public static class DocumentParser
 {

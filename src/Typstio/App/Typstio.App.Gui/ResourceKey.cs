@@ -1,4 +1,4 @@
-namespace Typstio.App.Gui.Defaults;
+namespace Typstio.App.Gui;
 
 public static class ResourceKey
 {

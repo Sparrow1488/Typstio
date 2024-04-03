@@ -1,7 +1,6 @@
 using System.Text;
 using Typstio.Core.Contracts;
 using Typstio.Core.Defaults;
-using Typstio.Core.Models;
 using Typstio.Core.Scripting;
 using static Typstio.Core.Defaults.Tokens;
 
